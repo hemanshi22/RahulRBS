@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction</title>
+<script type="text/javascript">
+function change() {
+	
+    var select = document.getElementById("slct");
+    var divv = document.getElementById("container");
+    var value = select.value;
+    if (value == 'criteria1') {
+        toAppend = "<input type='number'  name ='criteria_value' >"; 
+        divv.innerHTML=toAppend;
+        return;
+        }
+    if (value == 'criteria2') {
+        toAppend = "<input type='textbox'  name ='criteria_value' >"; 
+        divv.innerHTML=toAppend; 
+        return;
+        }
+    if (value == 'criteria3') {
+        toAppend = "<input type='date' id='Date' name ='criteria_value' >";
+        divv.innerHTML=toAppend;
+        return;
+        }
+        if (value == 'criteria4') {
+        toAppend = "<input type='date'  id='Date1' name ='criteria_value' >&nbsp; <input type='date' id='Date2' name ='criteria_value1' >";
+        divv.innerHTML = toAppend;  
+        return;
+        }   
+ };
+     </script>
+</head>
+<body>
+	<h1>Transaction Search</h1>
+	<h3>Please Select search criteria</h3>
+	<form method ="get" action="SearchController">
+	 <div>
+Select Criteria:<select name="select" id="slct" onchange="change();">
+<option value="criteria0" selected="true" disabled="disabled">Select</option>
+<option value="criteria1">Account number</option>
+<option value="criteria2">Account Type</option>
+<option value="criteria3">Date </option>
+<option value="criteria4">Date Range</option>
+</select></div>
+ Enter Value:<a id="container"></a></br>
+<input type="submit" value="submit">
+
+	
+	</form>
+	
+</body>
+</html> 
