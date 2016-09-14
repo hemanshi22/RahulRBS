@@ -58,7 +58,7 @@ public class SearchController extends HttpServlet {
 			double y = Double.parseDouble(username);
 			 arr =d.getTransactions(y);
 			 request.setAttribute("resultSet", arr); 
-				getServletConfig().getServletContext().getRequestDispatcher("/SearchDetails.jsp").forward(request,response);
+			 getServletConfig().getServletContext().getRequestDispatcher("/SearchDetails.jsp").forward(request,response);
 			}
 			else{
 				getServletConfig().getServletContext().getRequestDispatcher("/Error.html").forward(request,response);
