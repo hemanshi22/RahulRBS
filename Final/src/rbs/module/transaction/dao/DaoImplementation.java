@@ -18,12 +18,13 @@ public class DaoImplementation implements Dao {
 
 	@Override
 	public ArrayList<Transaction> getTransactions(Date date) {
-		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+	ArrayList<Transaction> transaction = new ArrayList<Transaction>();
+		
 		try{	
 			Connection c = DatabaseConnection.getConnection();
 			PreparedStatement query = c.prepareStatement("select * from transaction where trans_date= to_date(?,'dd-mm-yyyy')");
 			query.setString(1, dateToString(date));
-    		ResultSet result = query.executeQuery();
+    		ResultSet result  =  query.executeQuery();
     		
     		while(result.next()){
     			Transaction t=new Transaction();
@@ -36,15 +37,19 @@ public class DaoImplementation implements Dao {
     			t.setTransactionToType(result.getString(6));
     			t.setAmount(result.getDouble(7));
     			t.setAccountType(result.getString(8));
-    			transactions.add(t);
+    			transaction.add(t);
     		} 		
     		c.close();
 		}
 		catch (Exception e) {
 			System.out.println(e);	
 		}
-		return transactions;
+		return transaction;
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////
+	
+	
 	public ArrayList<Transaction> getTransactions(double accountnumber) {
        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
         try{        
@@ -75,6 +80,7 @@ public class DaoImplementation implements Dao {
         return transactions;
 }
 	
+///////////////////////////////////////////////////////////////	
 	ResultSet getTransactionUtility(String accountType){
 		ResultSet result=null; 
 		try{        
@@ -92,6 +98,7 @@ public class DaoImplementation implements Dao {
 		return new Formatter().format("%td-%tm-%tY",d,d,d).toString();
     }
 	
+	///////////////////////////////////////////////////////////////
 	@Override
 	public ArrayList<Transaction> getTransactions(Date start, Date end) {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
@@ -124,6 +131,7 @@ public class DaoImplementation implements Dao {
 		return transactions;
 	}
 	
+	///////////////////////////////////////////////////////////////////
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public ArrayList getTransactions(String accountType) {
@@ -190,8 +198,8 @@ public class DaoImplementation implements Dao {
 					t.setRate(result.getDouble(11));
 					transactions.add(t);
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e) {
 				e.printStackTrace();
 			} 		
 		}

@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 
 import rbs.module.transaction.dao.DaoImplementation;
 import rbs.module.transaction.model.Transaction;
+import rbs.module.transaction.rest.rest_app;
 @WebServlet("/SearchController")
 public class SearchController extends HttpServlet {
 	
@@ -47,7 +48,7 @@ public class SearchController extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out =response.getWriter();
-		DaoImplementation d = new DaoImplementation();
+		rest_app d = new rest_app();
 		
 		if(request.getParameter("select").equals("criteria1"))
 		{
