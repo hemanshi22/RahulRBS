@@ -14,8 +14,9 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body align="center">
-	<div class='well'>
+<body BGCOLOR="CYAN">
+<center>
+	<div >
 
 		<%
 			ArrayList<Transaction> resultSet = (ArrayList<Transaction>) request.getAttribute("resultSet");
@@ -32,5 +33,6 @@
 			}
 		%>
 	</div>
+	</center>
 </body>
 </html>

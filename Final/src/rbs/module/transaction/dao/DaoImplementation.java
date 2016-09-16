@@ -14,6 +14,7 @@ import java.util.Formatter;
 import rbs.module.transaction.model.DematTransaction;
 import rbs.module.transaction.model.FxTransaction;
 import rbs.module.transaction.model.LoanTransaction;
+import rbs.module.transaction.model.Savings;
 import rbs.module.transaction.model.TermDepositTransaction;
 import rbs.module.transaction.model.Transaction;
 
@@ -310,7 +311,11 @@ public class DaoImplementation implements DaoGet,DaoPost {
 					int length = 10;
 					if(length!=0)
 					{
-						DepositTransaction dep = new DepositTransaction();
+						
+						//**************
+						//Changed from DepositTransaction to Savings as table name has changed
+						//**************
+						Savings dep = new Savings();			
 						//will refer to accounts team API to get account details
 
 						Connection c = DatabaseConnection.getConnection();
@@ -423,7 +428,7 @@ public class DaoImplementation implements DaoGet,DaoPost {
 					{
 						//CREATE A DEPOSIT TRANSACTION CLASS METHOD
 
-						DepositTransaction dep = new DepositTransaction();
+						Savings dep = new Savings();
 						//will refer to accounts team API to get account details
 
 						Connection c = DatabaseConnection.getConnection();
@@ -477,7 +482,6 @@ public class DaoImplementation implements DaoGet,DaoPost {
 		return null;
 	}
 
-	@Override
 	String dateToString(java.sql.Date d){
 		return new Formatter().format("%td-%tm-%tY",d,d,d).toString();
 	}	

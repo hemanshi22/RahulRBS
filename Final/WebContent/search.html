@@ -10,22 +10,22 @@ function change() {
     var divv = document.getElementById("container");
     var value = select.value;
     if (value == 'criteria1') {
-        toAppend = "<input type='number'  name ='criteria_value' >"; 
+        toAppend = "<input type='number'  name ='criteria_value' required>"; 
         divv.innerHTML=toAppend;
         return;
         }
     if (value == 'criteria2') {
-        toAppend = "<input type='textbox'  name ='criteria_value' >"; 
+        toAppend = "<input type='textbox'  name ='criteria_value' required>"; 
         divv.innerHTML=toAppend; 
         return;
         }
     if (value == 'criteria3') {
-        toAppend = "<input type='date' id='Date' name ='criteria_value' >";
+        toAppend = "<input type='date' id='Date' name ='criteria_value' required>";
         divv.innerHTML=toAppend;
         return;
         }
         if (value == 'criteria4') {
-        toAppend = "<input type='date'  id='Date1' name ='criteria_value' >&nbsp; <input type='date' id='Date2' name ='criteria_value1' >";
+        toAppend = "<input type='date'  id='Date1' name ='criteria_value' required>&nbsp; <input type='date' id='Date2' name ='criteria_value1' required>";
         divv.innerHTML = toAppend;  
         return;
         }   
