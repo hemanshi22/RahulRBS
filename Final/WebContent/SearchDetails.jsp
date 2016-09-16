@@ -22,8 +22,8 @@
 			if (resultSet != null) {
 				out.println("<table border=1>");
 				for (Transaction arr : resultSet) {
-					out.println("<tr><td>" + arr.getTransactionId() + "</td><td> " + arr.getTransactionDate()
-							+ "</td><td> " + arr.getTransactionFrom() + "</td><td> " + arr.getTransactionFromType()
+					out.println("<tr>  <td>  " + arr.getTransactionId() + "</td>  <td>   " + arr.getTransactionDate()
+							+ "</td>  <td>  " + arr.getTransactionFrom() + "</td><td> " + arr.getTransactionFromType()
 							+ "</td><td> " + arr.getTransactionTo() + "</td><td> " + arr.getTransactionToType()
 							+ "</td><td> " + arr.getAmount() + "</td><td> " + arr.getAccountType() + "</td></tr>");
 

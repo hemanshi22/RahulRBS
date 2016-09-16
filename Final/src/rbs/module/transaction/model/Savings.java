@@ -1,9 +1,8 @@
 package rbs.module.transaction.model;
 
-public class LoanTransaction extends Transaction {
+public class Savings extends Transaction {
 	private double transactionId;
 	private String transactionDesc;
-	private int loanId;
 	public double getTransactionId() {
 		return transactionId;
 	}
@@ -16,19 +15,12 @@ public class LoanTransaction extends Transaction {
 	public void setTransactionDesc(String transactionDesc) {
 		this.transactionDesc = transactionDesc;
 	}
-	public double getLoanId() {
-		return loanId;
-	}
-	public void setLoanId(int loanId) {
-		this.loanId = loanId;
-	}
 	@Override
 	public String toString() {
-		return transactionId + ", " + transactionDesc+ ", " + loanId
+		return transactionId + ", " + transactionDesc
 				+ ", " + getTransactionDate() + ", " + getTransactionFrom()
 				+ ", " + getTransactionFromType() + ", "
 				+ getTransactionTo() + ", " + getTransactionToType() + ", "
-				+ getAmount() + ", " + getAccountType() + "\n";
+				+ getAmount() + ", " + getAccountType() +"\n";
 	}
-	
 }
