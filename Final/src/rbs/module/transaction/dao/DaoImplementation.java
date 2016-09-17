@@ -14,7 +14,7 @@ import java.util.Formatter;
 import rbs.module.transaction.model.DematTransaction;
 import rbs.module.transaction.model.FxTransaction;
 import rbs.module.transaction.model.LoanTransaction;
-import rbs.module.transaction.model.Savings;
+import rbs.module.transaction.model.SavingsTransaction;
 import rbs.module.transaction.model.TermDepositTransaction;
 import rbs.module.transaction.model.Transaction;
 
@@ -247,7 +247,9 @@ public class DaoImplementation implements DaoGet,DaoPost {
 			if(!(result.getString(1)).equals("Y"))
 				valid = false;
 			c.close();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -281,6 +283,7 @@ public class DaoImplementation implements DaoGet,DaoPost {
 
 		return out;
 	}
+	
 	@Override
 	public String CreateTransactions(int amount,String type, int account_no, String description,int emp_id) {
 		try {
@@ -313,9 +316,9 @@ public class DaoImplementation implements DaoGet,DaoPost {
 					{
 						
 						//**************
-						//Changed from DepositTransaction to Savings as table name has changed
+						//Changed from DepositTransaction to SavingsTransaction as table name has changed
 						//**************
-						Savings dep = new Savings();			
+						SavingsTransaction dep = new SavingsTransaction();			
 						//will refer to accounts team API to get account details
 
 						Connection c = DatabaseConnection.getConnection();
@@ -428,7 +431,7 @@ public class DaoImplementation implements DaoGet,DaoPost {
 					{
 						//CREATE A DEPOSIT TRANSACTION CLASS METHOD
 
-						Savings dep = new Savings();
+						SavingsTransaction dep = new SavingsTransaction();
 						//will refer to accounts team API to get account details
 
 						Connection c = DatabaseConnection.getConnection();

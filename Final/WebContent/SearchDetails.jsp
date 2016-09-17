@@ -14,20 +14,19 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body BGCOLOR="CYAN">
+<body align="center" height="100px">
 <center>
-	<div >
-
+	<div class='success'>
 		<%
 			ArrayList<Transaction> resultSet = (ArrayList<Transaction>) request.getAttribute("resultSet");
 			if (resultSet != null) {
 				out.println("<table border=1>");
+				out.println("</br></br></br></br></br></br></br></br>");
 				for (Transaction arr : resultSet) {
-					out.println("<tr>  <td>  " + arr.getTransactionId() + "</td>  <td>   " + arr.getTransactionDate()
-							+ "</td>  <td>  " + arr.getTransactionFrom() + "</td><td> " + arr.getTransactionFromType()
-							+ "</td><td> " + arr.getTransactionTo() + "</td><td> " + arr.getTransactionToType()
-							+ "</td><td> " + arr.getAmount() + "</td><td> " + arr.getAccountType() + "</td></tr>");
-
+					out.println("  <tr>  <td width='100'>  " + arr.getTransactionId() + "</td>  <td width='100'>   " + arr.getTransactionDate()
+							+ "  </td>  <td width='100'>  " + arr.getTransactionFrom() + "</td>  <td width='100'>   " + arr.getTransactionFromType()
+							+ "  </td>  <td width='100'> " + arr.getTransactionTo() + "</td>  <td width='100'>   " + arr.getTransactionToType()
+							+ "  </td>  <td width='100'> " + arr.getAmount() + "  </td>  <td width='100'> " + arr.getAccountType() + "  </td>  </tr>");
 				}
 				out.println("</table>");
 			}

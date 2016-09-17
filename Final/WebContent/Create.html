@@ -3,9 +3,93 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+create = function() {
+// 	if(document.getElementById('slct').value =="Loan_Disbursal") {
+// 		$.get( "http://192.168.1.124:8080/Final/rest/RestCreateService/CreateLoanTransaction/" + document.getElementByName('loan_id').value, 
+// 				function( data ) {
+// 			 console.log("http://192.168.1.124:8080/Final/rest/RestService/CreateLoanTransaction/" + document.getElementByName('loan_id').value); 
+// 			console.log(data);
+// 			   myvar=data; 
+// 			  setView();
+// 			});
+	if(document.getElementById('slct').value =="Saving_Transaction") {
+		$.get( "http://192.168.1.124:8080/Final/rest/RestCreateService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value, 
+				function( data ) {
+			 console.log($.get( "http://192.168.1.124:8080/Final/rest/RestService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value)); 
+			console.log(data);
+			   myvar=data; 
+			  setView();
+			});
+	}
+// 	else if(document.getElementById('SelectedOption').value =="By Account Type") {
+// 		$.get( "http://192.168.1.124:8080/Final/rest/RestService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value), 
+// 				function( data ) {
+// 			 console.log( "http://192.168.1.124:8080/Final/rest/RestService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('empid').value; 
+// 			console.log(data);
+// 			   myvar=data; 
+// 			  setView();
+// 			});
+// 	}
+// 	else {
+// 		$.get( "http://192.168.1.124:8080/Final/rest/RestService/getbetweendates/" + document.getElementById('daterange').value), 
+// 				function( data ) {
+// 			 console.log("http://192.168.1.124:8080/Final/rest/RestService/getbetweendates/" + document.getElementById('daterange').value); 
+// 			console.log(data);
+// 			   myvar=data; 
+// 			  setView();
+// 			});
+// 	}
+}
+</script>
+<script>
+        	function change() {
+        		
+        	    var select = document.getElementById("slct");
+        	    var divv = document.getElementById("container");
+        	    var value = select.value;
+        	    if (value == 'Loan_Disbursal') {
+        	        toAppend = "<input type='textbox'  name ='loan_id' >"; 
+        	        divv.innerHTML=toAppend; 
+        	        return;
+        	        }
+        	    if (value == 'FD_Term') {
+        	    	toAppend = "<input type='textbox'   name ='amount' >&nbsp; <input type='textbox'  name ='type' >&nbsp;<input type='textbox'  name ='account_no' >&nbsp;<input type='textbox'  name ='description' >&nbsp;<input type='textbox'  name ='emp_id'>";
+        	        divv.innerHTML=toAppend;
+        	        return;
+        	        }
+        	   
+        	    if (value == 'Saving_Transaction') {
+        	    	toAppend = "<input type='textbox' value='amount'  name ='amount' >&nbsp; <input type='textbox' value='account_no' name ='account_no' >&nbsp;<input type='textbox'  value='description' name ='description' >&nbsp;<input type='textbox' value='empid' name ='empid' >";
+        	        divv.innerHTML=toAppend;
+        	        return;
+        	        }
+        	        
+        	 };
+        </script>
 </head>
 <body>
-<h1>Hi</h1>
+	<h1>Transaction Search</h1>
+	<h3>Please Select search criteria</h3>
+	<form method="get">
+		<div>
+			Select Criteria:<select name="select" id="slct" onchange="change();">
+				<option value="default" selected="true" disabled="disabled">Select</option>
+				<option value="Loan_Disbursal">Loan</option>
+				<option value="FD_Term">FD</option>
+				<option value="Saving_Transaction">STrans</option>
+
+			</select>
+		</div>
+		Enter Value:<a id="container"></a></br> <input type="submit" value="submit"
+			onclick='create()'>
+
+
+	</form>
+
 
 </body>
 </html>

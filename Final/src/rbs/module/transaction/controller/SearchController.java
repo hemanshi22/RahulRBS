@@ -2,6 +2,8 @@ package rbs.module.transaction.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -43,7 +45,13 @@ public class SearchController extends HttpServlet {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out =response.getWriter();
+		 URL url = new URL("http://localhost:8080/Final/rest/RestService/getbyaccountnumber/1");
+		 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		 connection.setRequestMethod("GET");
+		
+		
+		
+/*		PrintWriter out =response.getWriter();
 		RestService d = new RestService();
 
 		if(request.getParameter("select").equals("criteria1"))
@@ -87,7 +95,7 @@ public class SearchController extends HttpServlet {
 		ArrayList arr =d.getTransactions(x, y);
 		request.setAttribute("resultSet", arr); 
 		getServletConfig().getServletContext().getRequestDispatcher("/SearchDetails.jsp").forward(request,response);		}
-
+*/
 	}
 
 }

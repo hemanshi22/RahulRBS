@@ -30,5 +30,4 @@ public class TermDepositTransaction extends Transaction {
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
-	
 }
