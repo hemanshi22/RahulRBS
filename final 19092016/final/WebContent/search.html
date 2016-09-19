@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+	/* myvar=[
+	 {"transactionId":1.0,"transactionTo":2.0,"amount":100.0,"accountType":"DEPOSIT","transactionFromType":"Savings","transactionFrom":1.0,"transactionDate":"18-08-2016","transactionToType":"Savings"},
+	 {"transactionId":2.0,"transactionTo":1.0,"amount":100.0,"accountType":"DEPOSIT","transactionFromType":"Savings","transactionFrom":2.0,"transactionDate":"20-08-2016","transactionToType":"Savings"},
+	 {"transactionId":3.0,"transactionTo":1.0,"amount":50000.0,"accountType":"LOAN","transactionFromType":"Bank","transactionFrom":0.0,"transactionDate":"16-09-2016","transactionToType":"Savings"},
+	 {"transactionId":1000.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1003.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1004.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1007.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1005.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1006.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1008.0,"transactionTo":0.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"SB","transactionFrom":1.0,"transactionDate":"15-09-2016","transactionToType":"null"},
+	 {"transactionId":1002.0,"transactionTo":1.0,"amount":1000.0,"accountType":"Deposit","transactionFromType":"null","transactionFrom":0.0,"transactionDate":"15-09-2016","transactionToType":"SB"},
+	 {"transactionId":1009.0,"transactionTo":1.0,"amount":5000.0,"accountType":"LOAN","transactionFromType":"Bank","transactionFrom":0.0,"transactionDate":"16-09-2016","transactionToType":"Savings"}
+	 ]; */
+	function change() {
+
+		var select = document.getElementById("slct");
+		var divv = document.getElementById("container");
+		var value = select.value;
+		if (value == 'Account Number') {
+			toAppend = "<input type='number' id ='acc' name ='acc' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+		if (value == 'Date') {
+			toAppend = "<input type='date' id='date' name ='date' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+		if (value == 'Account Type') {
+			toAppend = "<input type='textbox' id ='type' name ='type' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+		if (value == 'Date Range') {
+			toAppend = "<input type='date'  id='date1' name ='date1' required>&nbsp; <input type='date' id='date2' name ='date2' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+	};
+
+	GetData = function() {
+		if (document.getElementById('slct').value == "Account Number") {
+			$
+					.get(
+							"http://192.168.1.2:8080/final/rest/RestService/getbyaccountnumber/"
+									+ document.getElementById('acc').value,
+							function(data) {
+								console
+										.log("http://192.168.1.2:8080/final/rest/RestService/getbyaccountnumber/"
+												+ document
+														.getElementById('acc').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		} else if (document.getElementById('slct').value == "Date") {
+			$
+					.get(
+							"http://192.168.1.2:8080/final/rest/RestService/getbydate/"
+									+ document.getElementById('date').value,
+							function(data) {
+								console
+										.log("http://192.168.1.2:8080/final/rest/RestService/getbydate/"
+												+ document
+														.getElementById('date').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		} else if (document.getElementById('slct').value == "Account Type") {
+			$
+					.get(
+							"http://192.168.1.2:8080/final/rest/RestService/getbyaccounttype/"
+									+ document.getElementById('type').value,
+							function(data) {
+								console
+										.log("http://192.168.1.2:8080/final/rest/RestService/getbyaccounttype/"
+												+ document
+														.getElementById('type').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		}
+
+		else if ((document.getElementById('slct').value == "Date Range")) {
+			$
+					.get(
+							"http://192.168.1.2:8080/final/rest/RestService/getbetweendates/"
+									+ document.getElementById('date1').value
+									+ "/"
+									+ document.getElementById('date2').value,
+							function(data) {
+								console
+										.log("http://192.168.1.2:8080/final/rest/RestService/getbetweendates/"
+												+ document.getElementById('date1').value
+												+ "/"
+												+ document.getElementById('date2').value);
+								console.log(data);
+								myvar = data;
+							});
+		}
+	}
+	setView = function() {
+		var div = document.getElementById('toShowData');
+		var GetData = "<table border = 2>";
+		for (i = 0; i < myvar.length; i++) {
+			GetData = GetData + "<tr><td width='100'>" + myvar[i].transactionId
+					+ "</td><td width='100'>" + myvar[i].transactionDate
+					+ "</td><td width='100'>" + myvar[i].transactionFrom
+					+ "</td><td width='100'>" + myvar[i].transactionFromType
+					+ "</td><td width='100'>" + myvar[i].transactionTo
+					+ "</td><td width='100'>" + myvar[i].transactionToType
+					+ "</td><td width='100'>" + myvar[i].amount
+					+ "</td><td width='100'>" + myvar[i].accountType
+					+ "</td></tr>";
+		}
+		GetData = GetData + "</table>";
+		console.log(GetData);
+		div.innerHTML = GetData;
+	}
+</script>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body BGCOLOR="CYAN">
+	<center>
+		<h1>Transaction Search</h1>
+		<h3>Please Select search criteria</h3>
+		
+		Select Criteria:<select name="slct" id="slct" onchange="change();">
+			<option value="criteria0" selected="true" disabled="disabled">Select</option>
+			<option value="Account Number">Account Number</option>
+			<option value="Date">Date</option>
+			<option value="Account Type">Account Type</option>
+			<option value="Date Range">Date Range</option>
+		</select> Enter Value:<a id="container"></a></br> <input type="button"
+			value="Submit" onclick='GetData()'></input>
+		<div id="toShowData"></div>
+	
+	</center>
+</body>
+</html>
