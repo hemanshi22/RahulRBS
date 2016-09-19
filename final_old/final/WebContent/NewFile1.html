@@ -1,0 +1,57 @@
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta charset="ISO-8859-1"> -->
+<!-- <title>Insert title here</title> -->
+<!-- <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+<!-- <script type = "text/javascript"> -->
+
+<!-- // getaccno = function(){$.get('http://localhost:8080/Final/rest/RestService/getbyaccountnumber/1',function(data){
+// 	   alert(data);} );}     -->
+<!-- </script> -->
+<!-- </head> -->
+<!-- <body> -->
+<!-- <input type="button" value="Submit" onclick='getaccno()'/> -->
+<!-- </body> -->
+<!-- </html> -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+	<div ng-app="myApp" ng-controller="myCtrl">
+
+		<h2>RBS Bank</h2>
+		<p>Module Permissions</p>
+<!-- 		Enter acc no: <input ng-model="ac"> -->
+		<button ng-click="getPerm()">Get Permissions</button>
+			
+
+		transactionId : {{PermDetails.transactionId}} </br>
+<!-- 		CM : {{PermDetails.cm}}</br> -->
+<!-- 		PC : {{PermDetails.pc}}</br> -->
+		
+	</div>
+<!-- //+ $scope.empId -->
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('myCtrl', function($scope, $http) {
+
+			$scope.getPerm = function() {
+
+				$http.get(
+						"http://localhost:8080/final/rest/RestService/getbyaccountnumber/1"
+								).then(function(response) {
+					$scope.PermDetails = response.data;
+				});
+			}
+		});
+	</script>
+
+</body>
+</html>
