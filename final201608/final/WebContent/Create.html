@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction</title>
+
+<link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+<script type="text/javascript">
+
+function change() {	
+    var select = document.getElementById("slct");
+    var divv = document.getElementById("container");
+    var value = select.value;
+    if (value == 'Loan_Disbursal') {
+        toAppend = "<input type='textbox' id='loan_id'  name ='loan_id' placeholder='Loan Id'>"; 
+        divv.innerHTML=toAppend; 
+        return;
+        }
+    if (value == 'Saving_Transaction') {
+    	toAppend = "<input type='textbox'  id='amount' name ='amount' placeholder='Amount'>&nbsp;<input type='hidden'  id='type' name ='type' placeholder='Type'>&nbsp;<input type='textbox' id='account_no' name ='account_no' placeholder='Account No.' >&nbsp;<input type='textbox' id='description' name ='description' placeholder='Deposit/Withdrawal'>";
+        divv.innerHTML=toAppend;
+        return;
+        }
+   
+    if (value == 'FD_Term') {
+    	toAppend = "<input type='number' id='amount' name ='amount' placeholder='Amount'>&nbsp; <input type='number' id='account_no' name ='account_no' placeholder='Account No.' >&nbsp;<input type='textbox' id='description' name ='description' placeholder='Description' >";
+        divv.innerHTML=toAppend;
+        return;
+        }
+ };
+ 
+create = function() {
+	if(document.getElementById('slct').value =="Loan_Disbursal") {
+		$.post( "http://localhost:8080/final/rest/RestServiceCreate/CreateLoanTransaction", 
+				{loan_id:document.getElementById('loan_id').value}, 
+				function(response,status){ // Required Callback Function
+					alert("*----Received Data----*\n\nResponse : " + response+"\n\nStatus : " + status);
+				});
+	}
+	if(document.getElementById('slct').value =="Saving_Transaction") 
+	{
+// 		$.post( "http://192.168.1.2:8080/final/rest/RestServiceCreate/CreateSavingsTransaction/" + 
+// 				document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + 
+// 				"/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value, 
+// 				function( data ) 
+			
+			$.post("http://localhost:8080/final/rest/RestServiceCreate/CreateSavingsTransaction", 
+			{amount: document.getElementById('amount').value, type:document.getElementById('type').value, account_no: document.getElementById('account_no').value, description: document.getElementById('description').value},
+						 
+					
+			function(response,status){ // Required Callback Function
+				alert("*----Received Data----*\n\nResponse : " + response+"\n\nStatus : " + status);
+			});
+	}
+
+	if(document.getElementById('slct').value =="FD_Term") {
+//			 		$.post( "http://192.168.1.2:8080/final/rest/RestServiceCreate/CreateSavingsTransaction/" + 
+//			 				document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + 
+//			 				"/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value, 
+//			 				function( data ) 
+		$.post("http://192.168.1.124:8080/final/rest/RestServiceCreate/CreateFDTransaction", 
+		{ amount: document.getElementById('amount').value,account_no : document.getElementById('account_no').value,description:document.getElementById('description').value},
+									 
+								
+			function(response,status){ // Required Callback Function
+				alert("\n\nStatus : " + status);
+			}
+		);
+
+
+	}
+	
+}
+	
+// 	else if(document.getElementById('SelectedOption').value =="By Account Type") {
+// 		$.get( "http://192.168.1.124:8080/Final/rest/RestService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('emp_id').value), 
+// 				function( data ) {
+// 			 console.log( "http://192.168.1.124:8080/Final/rest/RestService/CreateSavingsTransaction/" + document.getElementByName('amount').value + "/"+document.getElementByName('account_no').value + "/"+document.getElementByName('description').value + "/"+document.getElementByName('empid').value; 
+// 			console.log(data);
+// 			   myvar=data; 
+// 			  setView();
+// 			});
+// 	}
+// 	else {
+// 		$.get( "http://192.168.1.124:8080/Final/rest/RestService/getbetweendates/" + document.getElementById('daterange').value), 
+// 				function( data ) {
+// 			 console.log("http://192.168.1.124:8080/Final/rest/RestService/getbetweendates/" + document.getElementById('daterange').value); 
+// 			console.log(data);
+// 			   myvar=data; 
+// 			  setView();
+// 			});
+// 	}
+
+</script>
+
+</head>
+<body>
+<center>
+	<h1>Transaction Create</h1>
+	<h3>Please Select Transaction Mode</h3>
+
+	<div>
+		Type Of Transaction :<select name="select" id="slct"
+			onchange='change();'>
+			<option value="default" selected="true" disabled="disabled">Select</option>
+			<option value="Loan_Disbursal">Loan</option>
+			<option value="FD_Term">FD/TD</option>
+			<option value="Saving_Transaction">Savings</option>
+		</select>
+	</div>
+	<div>
+		Enter Value:<a id="container"></a></br>
+	</div>
+
+	<input class="btn btn-primary" type="submit" value="submit" onclick='create();'>
+
+</center>
+
+</body>
+</html>
