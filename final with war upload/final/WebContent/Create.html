@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction</title>
+
+<link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+<script type="text/javascript">
+
+function change() {	
+    var select = document.getElementById("slct");
+    var divv = document.getElementById("container");
+    var value = select.value;
+    if (value == 'Loan_Disbursal') {
+        toAppend = "<input type='textbox' id='loan_id'  name ='loan_id' placeholder='Loan Id'>"; 
+        divv.innerHTML=toAppend; 
+        return;
+        }
+    if (value == 'Saving_Transaction') {
+    	toAppend = "<input type='textbox'  id='amount' name ='amount' placeholder='Amount'>&nbsp;<input type='hidden'  id='type' name ='type' placeholder='Type'>&nbsp;<input type='textbox' id='account_no' name ='account_no' placeholder='Account No.' >&nbsp;<select name='select' id='description' style='height:26px;'><option value='default' selected='true' disabled='disabled'>Select</option><option value='deposit' id = 'select_deposit' style='display:block;'>Deposit</option><option value='withdrawal' id = 'select_withdrawal' style='display:block;'>Withdrawal</option></select>";
+        divv.innerHTML=toAppend;
+        return;
+        }
+   
+    if (value == 'FD_Term') {
+    	toAppend = "<input type='number' id='amount' name ='amount' placeholder='Amount'>&nbsp; <input type='number' id='account_no' name ='account_no' placeholder='Account No.' >&nbsp;<select name='select' id='description' style='height:26px;'><option value='default' selected='true' disabled='disabled'>Select</option><option value='FD' id = 'select_fd' style='display:block;'>Fixed Deposit</option><option value='RD' id = 'select_rd' style='display:block;'>Recurring Deposit</option></select>";
+        divv.innerHTML=toAppend;
+        return;
+        }
+ };
+ 
+create = function() {
+	
+	if(document.getElementById('slct').value =="Loan_Disbursal") 
+	{
+		$.post( "http://103.62.238.195:8080/final/rest/RestServiceCreate/CreateLoanTransaction", 
+				{loan_id:document.getElementById('loan_id').value}, 
+				function(response,status){ // Required Callback Function
+					alert("*----Received Data----*\n\nResponse : " + response+"\n\nStatus : " + status);
+				});
+	}
+	
+	if(document.getElementById('slct').value =="Saving_Transaction") 
+	{
+		balance = null;
+		acc_TYPE=null;
+		
+		if (document.getElementById('description').value == "withdrawal")
+			{
+			
+			 $.get("http://103.62.238.195:8080/UIprogram/rest/rest_app/getSearchDetails/"
+						+ document.getElementById('account_no').value+"/0", function(data) {
+							 balance = data[0].balance;
+							 acc_TYPE =data[0].acc_TYPE;
+							console.log(balance);
+							if(balance >= (document.getElementById('amount').value))
+							{
+									$.post("http://103.62.238.195:8080/final/rest/RestServiceCreate/CreateSavingsTransaction", 
+									{amount: document.getElementById('amount').value, type:document.getElementById('type').value, account_no: document.getElementById('account_no').value, description: document.getElementById('description').value,acc_type: acc_TYPE },
+									function(response,status){ // Required Callback Function
+										alert("*----Received Data----*\n\nResponse : " + response+"\n\nStatus : " + status);
+									});
+									
+									$.post("http://103.62.238.195:8080/UIprogram/rest/rest_app/update_balance", 
+											{amount: document.getElementById('amount').value, account_no: document.getElementById('account_no').value, description: "-"},
+											function(response,status){ // Required Callback Function
+												alert("Transaction is Complete !!");
+											});
+						}
+							
+						else if(balance < (document.getElementById('amount').value))
+						{
+						alert("Not sufficient balance");
+						}	
+						else if(balance==null)
+						{
+						alert("Account does not exist!");
+							}
+			 });	
+			}
+		
+		else if (document.getElementById('description').value == "deposit")
+		{
+		
+			$.post("http://103.62.238.195:8080/final/rest/RestServiceCreate/CreateSavingsTransaction", 
+			{amount: document.getElementById('amount').value, type:document.getElementById('type').value, account_no: document.getElementById('account_no').value, description: document.getElementById('description').value},
+			function(response,status){ // Required Callback Function
+	
+			});
+			
+			$.post("http://103.62.238.195:8080/UIprogram/rest/rest_app/update_balance", 
+					{amount: document.getElementById('amount').value,account_no: document.getElementById('account_no').value, description:"+"},
+					function(response,status){ // Required Callback Function
+					alert("Transaction is Complete !!");
+					});	
+		}
+	}
+	if(document.getElementById('slct').value =="FD_Term") {
+
+		$.post("http://103.62.238.195:8080/final/rest/RestServiceCreate/CreateFDTransaction", 
+		{ amount: document.getElementById('amount').value,account_no : document.getElementById('account_no').value,description:document.getElementById('description').value},
+									 
+								
+			function(response,status){ // Required Callback Function
+				alert("\n\nStatus : " + status);
+			});
+		
+		$.post("http://192.168.1.17:9090/UIprogram/rest/rest_app/update_balance", 
+				{amount: document.getElementById('amount').value,account_no: document.getElementById('account_no').value, description:"+"},
+				function(response,status){ // Required Callback Function
+					alert("Transaction is Complete !!");
+				});
+	}	
+}
+
+</script>
+
+</head>
+<body>
+<center>
+	<h1>Transaction Create</h1>
+	<h3>Please Select Transaction Mode</h3>
+
+	<div>
+		Type Of Transaction :<select name="select" id="slct" onchange='change();'>
+			<option value="default" selected="true" disabled="disabled">Select</option>
+			<option value="Loan_Disbursal" id = '1' style="display:block;">Loan</option>
+			<option value="FD_Term" id = '2' style="display:block;">FD/TD</option>
+			<option value="Saving_Transaction" id = '3' style="display:block;">Savings</option>
+		</select>
+	</div></br>
+	<div>
+		<a id="container"></a>
+	</div>
+	</br>
+
+	<input class="btn btn-primary" type="submit" value="submit" onclick='create();'>
+
+</center>
+
+</body>
+<script type = "text/javascript">
+
+	var post_tml = localStorage.getItem("posttml");
+		var post_tmtd = localStorage.getItem("posttmtd");
+		var post_tmsa = localStorage.getItem("posttmsa");
+		if (post_tml == 0) {
+			document.getElementById('1').style.display = 'none';
+		}
+		if (post_tmtd == 0) {
+			document.getElementById('2').style.display = 'none';
+		}
+		if (post_tmsa == 0) {
+			document.getElementById('3').style.display = 'none';
+		}
+	
+</script>
+</html>

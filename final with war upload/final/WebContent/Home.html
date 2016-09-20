@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet" href="bootstrap.min.css"> 
+<script src="jquery.min.js"> </script>
+
+<script src="bootstrap.min.js"> </script>
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<!-- jQuery rest -->
+<script src="http://jpillora.com/jquery.rest/dist/1/jquery.rest.min.js"></script>
+<!-- WARNING: I advise not using this link, instead download and host this library on your own server as GitHub has download limits -->
+
+<script>
+function $_GET(param) {
+	var vars = {};
+	this.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
+var empID = $_GET('emp_id');
+if(empID==null) {
+	empID = 1;
+}
+
+var client = new $.RestClient('http://103.62.238.195:8080/BankStructServices/rest/');
+var desk_id_2;
+// var search_tml,post_tml,amount_allowed_tml,search_tmtd,post_tmtd,amount_allowed_tmtd,search_tmsa,post_tmsa,amount_allowed_tmsa;
+client.add('ModuleService',{ isSingle: true });
+client.ModuleService.add('getModule');
+client.ModuleService.getModule.read({emp_id:empID}).done(function (data){
+  desk_id_2 = data.desk_id;
+  console.log(desk_id_2);
+  client.add('RightsService',{ isSingle: true });
+  client.RightsService.add('getRights');
+  client.RightsService.getRights.read({desk_id:desk_id_2,mod:'TML'}).done(function (data){
+    search_tml = data.get;
+    localStorage.setItem("searchtml",search_tml);
+    console.log(search_tml);
+    post_tml = data.post;
+    localStorage.setItem("posttml",post_tml);
+    console.log(post_tml);
+    amount_allowed_tml = data.fin_lim; 
+    showtags();
+  });
+  client.RightsService.getRights.read({desk_id:desk_id_2,mod:'TMTD'}).done(function (data){
+            search_tmtd = data.get;
+            localStorage.setItem("searchtmtd",search_tmtd);
+            console.log(search_tmtd);
+            post_tmtd = data.post;
+            console.log(post_tmtd);
+            localStorage.setItem("posttmtd",post_tmtd);
+            amount_allowed_tmtd = data.fin_lim;
+            showtags();
+  });
+  client.RightsService.getRights.read({desk_id:desk_id_2,mod:'TMSA'}).done(function (data){
+            search_tmsa = data.get;
+            localStorage.setItem("searchtmsa",search_tmsa);
+            console.log(search_tmsa);
+            post_tmsa = data.post;
+            localStorage.setItem("posttmsa",post_tmsa);
+            console.log(post_tmsa);           
+            amount_allowed_tmsa = data.fin_lim;
+            showtags();
+  });
+
+});
+var post_tml = localStorage.getItem("posttml");
+var post_tmtd = localStorage.getItem("posttmtd");
+var post_tmsa = localStorage.getItem("posttmsa");
+var search_tml = localStorage.getItem("searchtml");
+var search_tmtd = localStorage.getItem("searchtmtd");
+var search_tmsa = localStorage.getItem("searchtmsa");
+
+</script>
+</head>
+<body>
+<center >
+<form >
+	<!-- <h1 class="active">Transaction</h1> -->
+	<ul class="nav nav-pills nav-stacked">
+	<li class="active"><a href="#"><h1>Transaction</h1></a></li>
+    <li><a id = '1' style="display:none;" href="search.html"><h3>Search Transaction</h3></a></li>
+    <li><a id = '2' style="display:none;" href="Create.html"><h3>Create New Transaction</h3></a></li>
+  </ul>
+  </form>
+</center>	
+<script type="text/javascript">
+showtags = function() {
+	if((search_tmtd || search_tml|| search_tmsa)==1)
+	{
+	
+	document.getElementById('1').style.display='block';
+	}
+	
+	if((post_tml || post_tmtd || post_tmsa)==1  )
+	{
+	document.getElementById('2').style.display='block';
+	}
+}
+
+</script>
+<script>
+<!-- <script type="text/javascript"> -->
+// 	var country;
+// 	$.get("http://ipinfo.io", function(response) {
+// 	    console.log(response.city, response.country);
+// 	    country = response.country;
+// 	    var m_names = new Array("jan", "feb", "mar", 
+// 	    		"apr", "may", "jun", "jul", "aug", "sep", 
+// 	    		"oct", "nov", "dec");
+
+// 	    		var d = new Date();
+// 	    		var curr_date = d.getDate();
+// 	    		var curr_month = d.getMonth();
+// 	    		var curr_year = d.getFullYear();
+// 	    		var final_date = curr_date + "-" + m_names[curr_month] + "-" + curr_year;
+// 	    		$.get("http://103.62.238.195:8080/ReferenceData/rest/holiday/isHoliday/"+country+"/"+final_date, function(data) {
+// 	    			localStorage.setItem("bool",data);
+// 	    			showtags();
+// 	    		});
+// 	}, "jsonp");
+	//&& !localStorage.getItem("bool")
+	</script>			
+	
+<!-- 	</script> -->
+</body>
+</html>

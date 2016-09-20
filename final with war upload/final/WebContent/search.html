@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction</title>
+<link rel="stylesheet" href="bootstrap.min.css"> 
+<script src="jquery.min.js"> </script>
+
+<script src="bootstrap.min.js"> </script>
+
+
+<script type="text/javascript">
+var search_tml = localStorage.getItem("searchtml");
+var search_tmtd = localStorage.getItem("searchtmtd");
+var search_tmsa = localStorage.getItem("searchtmsa");
+
+	function change() {
+
+		var select = document.getElementById("slct");
+		var divv = document.getElementById("container");
+		var value = select.value;
+		if (value == 'Account Number') {
+			toAppend = "<input type='number' id ='acc' name ='acc' placeholder='Account No.' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+		if (value == 'Date') {
+			toAppend = "<input type='date' id='date' name ='date' required>";
+			
+			divv.innerHTML = toAppend;
+			return;
+		}
+		if (value == 'Account Type') {
+			/* toAppend = "<input type='textbox' id ='type' name ='type' required>"; */
+			toAppend="<select name='type' id='type' class='dropdown-toggle'><option value='criteria0' selected='true' disabled='disabled'>Select</option><option value='LOAN' id='select_loan'>Loan</option><option value='SAVINGS' id='select_savings'>Savings</option><option value='TERM DEPOSIT' id='select_td'>Term Deposit</option><option value='FX'>Forex</option><option value='DEMAT'>Demat</option></select>";
+			divv.innerHTML = toAppend;
+			
+			if(search_tml == 0) {
+				document.getElementById("select_loan").style.display='none';
+			}
+			
+			if(search_tmtd == 0) {
+				document.getElementById("select_td").style.display='none';
+			}
+			
+			if(search_tmsa == 0) {
+				document.getElementById("select_savings").style.display='none';
+			}
+			return;
+			
+		}
+		if (value == 'Date Range') {
+			toAppend = "<input type='date'  id='date1' name ='date1' required>&nbsp; <input type='date' id='date2' name ='date2' required>";
+			divv.innerHTML = toAppend;
+			return;
+		}
+	};
+
+	GetData = function() {
+		if (document.getElementById('slct').value == "Account Number") {
+			$.get("http://103.62.238.195:8080/final/rest/RestService/getbyaccountnumber/"
+									+ document.getElementById('acc').value,
+							function(data) {
+								console
+										.log("http://103.62.238.195:8080/final/rest/RestService/getbyaccountnumber/"
+												+ document
+														.getElementById('acc').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		} else if (document.getElementById('slct').value == "Date") {
+			$
+					.get(
+							"http://103.62.238.195:8080/final/rest/RestService/getbydate/"
+									+ document.getElementById('date').value,
+							function(data) {
+								console
+										.log("http://103.62.238.195:8080/final/rest/RestService/getbydate/"
+												+ document
+														.getElementById('date').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		} else if (document.getElementById('slct').value == "Account Type") {
+			$
+					.get(
+							"http://103.62.238.195:8080/final/rest/RestService/getbyaccounttype/"
+									+ document.getElementById('type').value,
+							function(data) {
+								console
+										.log("http://103.62.238.195:8080/final/rest/RestService/getbyaccounttype/"
+												+ document
+														.getElementById('type').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		}
+
+		else if ((document.getElementById('slct').value == "Date Range")) {
+			$
+					.get(
+							"http://103.62.238.195:8080/final/rest/RestService/getbetweendates/"
+									+ document.getElementById('date1').value
+									+ "/"
+									+ document.getElementById('date2').value,
+							function(data) {
+								console.log("http://103.62.238.195:8080/final/rest/RestService/getbetweendates/"
+												+ document.getElementById('date1').value
+												+ "/"
+												+ document.getElementById('date2').value);
+								console.log(data);
+								myvar = data;
+								setView();
+							});
+		}
+	}
+	
+	setView = function() {
+		var div = document.getElementById('toShowData');
+		 
+		var GetData = "<table class='table table-striped table-hover'  ><thead><tr><th>Transaction Id</th> <th>Transaction Date</th><th>Transaction From</th><th>Transaction Type(From)</th><th>Transaction To</th><th>Transaction Type(To)</th><th>Amount</th><th>Account Type</th></tr></thead>";
+		
+
+			for (i = 0; i < myvar.length; i++) {
+				
+			GetData = GetData + "<tr><td width='100'>" + myvar[i].transactionId
+					+ "</td><td width='100'>" + myvar[i].transactionDate
+					+ "</td><td width='100'>" + myvar[i].transactionFrom
+					+ "</td><td width='100'>" + myvar[i].transactionFromType
+					+ "</td><td width='100'>" + myvar[i].transactionTo
+					+ "</td><td width='100'>" + myvar[i].transactionToType
+					+ "</td><td width='100'>" + myvar[i].amount
+					+ "</td><td width='100'>" + myvar[i].accountType
+					+ "</td></tr>";
+		}
+		GetData = GetData + "</table>";
+		console.log(GetData);
+		div.innerHTML = GetData;
+	}
+</script>
+<script type="text/javascript">
+</script>
+
+</head>
+<body >
+	<center>
+		<h1>Transaction Search</h1>
+		
+		<h3>Please Select search criteria</h3>
+		
+		Select Criteria:<select name="slct" id="slct" style="height:26px;" class="dropdown-toggle"onchange="change();">
+			<option value="criteria0" selected="true" disabled="disabled">Select</option>
+			<option value="Account Number">Account Number</option>
+			<option value="Date">Date</option>
+			<option value="Account Type">Account Type</option>
+			<option value="Date Range">Date Range</option>
+		</select> <a id="container"></a></br></br> <input class="btn btn-primary" type="button"
+			value="Submit" onclick='GetData()'></input>
+		<div id="toShowData"></div>
+		
+		
+	
+	</center>
+</body>
+</html>
