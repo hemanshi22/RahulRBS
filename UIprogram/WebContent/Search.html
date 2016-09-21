@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Search Account </title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form method="post" action="SearchController">
+Account Number: <input type="text" name="accountsearch" class='form-control'  width=10px;><br>
+Include Archive<input type="checkbox" name="c1" value="1" ><br>
+Account Type:<input type="text" name="accounttype" class='form-control'><br>
+Starting Date:<input type="text" name="d1" placeholder="Enter in dd-mm-yy" class='form-control'><br>
+Ending Date:<input type="text" name="d2" placeholder="Enter in dd-mm-yy" class='form-control'><br>
+<input type="submit" name="searchsubmit" value="Search" class='btn btn-primary'><br>
+</form> 
+</body>

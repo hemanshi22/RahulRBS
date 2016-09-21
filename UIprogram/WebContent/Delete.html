@@ -1,0 +1,23 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Delete Account </title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form method="post" action="DeleteController">
+Account Number: <input type="text" name="accountdelete" class='form-control'><br>
+<input type="submit" name="deletesubmit" value="Delete" class='btn btn-primary'>
+</form>
+<div id="result"></div>
+</body>
+</html>
+<script type="text/javascript">
+var e=<%String s=getAttribute("Error"); %>
+result.innerHtml= e;
+</script>
