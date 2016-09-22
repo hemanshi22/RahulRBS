@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACCOUNT_TYPE">
+          <Key>
+            <PropertyRef Name="ACC_TYPE_ID" />
+          </Key>
+          <Property Name="ACC_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACC_TYPE_DESC" Type="varchar2" MaxLength="25" />
+          <Property Name="MIN_BAL" Type="number" Precision="38" Scale="0" />
+          <Property Name="INTEREST_RATE" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="BANKACCOUNT">
+          <Key>
+            <PropertyRef Name="ACC_NO" />
+          </Key>
+          <Property Name="CIF" Type="number" Precision="38" Scale="0" />
+          <Property Name="BRANCH_CODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="ACC_NO" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACC_TYPE_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="ACC_OPEN_DATE" Type="date" />
+          <Property Name="ACC_BALANCE" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="BRANCH">
+          <Key>
+            <PropertyRef Name="BRANCH_CODE" />
+          </Key>
+          <Property Name="BRANCH_CODE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BRANCH_NAME" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="BRANCH_ADDRESS" Type="varchar2" MaxLength="50" />
+          <Property Name="BRANCH_CITY" Type="varchar2" MaxLength="20" />
+          <Property Name="BRANCH_STATE" Type="varchar2" MaxLength="20" />
+          <Property Name="BRANCH_ZIP" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CIF" />
+          </Key>
+          <Property Name="CIF" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="CUSTOMER_TITLE" Type="varchar2" MaxLength="5" />
+          <Property Name="CUSTOMER_FNAME" Type="varchar2" MaxLength="10" />
+          <Property Name="CUSTOMER_LNAME" Type="varchar2" MaxLength="10" />
+          <Property Name="CUSTOMER_DOB" Type="date" />
+          <Property Name="CUSTOMER_EMAIL" Type="varchar2" MaxLength="30" />
+          <Property Name="CUSTOMER_PHONE" Type="number" Precision="38" Scale="0" />
+          <Property Name="CUSTOMER_GENDER" Type="varchar2" MaxLength="6" />
+          <Property Name="CUSTOMER_ADDRESS" Type="varchar2" MaxLength="10" />
+          <Property Name="CUSTOMER_CITY" Type="varchar2" MaxLength="8" />
+          <Property Name="CUSTOMER_STATE" Type="varchar2" MaxLength="8" />
+          <Property Name="CUSTOMER_ZIPCODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="IDPROOF_TYPE" Type="varchar2" MaxLength="10" />
+          <Property Name="IDPROOF_NUMBER" Type="number" Precision="38" Scale="0" />
+          <Property Name="ADDRESSPROOF_TYPE" Type="varchar2" MaxLength="10" />
+          <Property Name="ADDRESSPROOF_NUMBER" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="TRANSACTION">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BRANCH_CODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="ACCOUNT_NO" Type="number" Precision="38" Scale="0" />
+          <Property Name="TRANS_TYPE" Type="varchar2" MaxLength="12" />
+          <Property Name="TRANS_DATE" Type="date" Nullable="false" />
+          <Property Name="TRANS_DESC" Type="varchar2" MaxLength="20" />
+          <Property Name="TRANS_AMOUNT" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <Association Name="SYS_C0011129">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CIF" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="CIF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011130">
+          <End Role="BRANCH" Type="Self.BRANCH" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011131">
+          <End Role="ACCOUNT_TYPE" Type="Self.ACCOUNT_TYPE" Multiplicity="1" />
+          <End Role="ACCOUNT_TYPE1" Type="Self.ACCOUNT_TYPE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_TYPE">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_TYPE1">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011132">
+          <End Role="ACCOUNT_TYPE" Type="Self.ACCOUNT_TYPE" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_TYPE">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011133">
+          <End Role="BRANCH" Type="Self.BRANCH" Multiplicity="0..1" />
+          <End Role="TRANSACTION" Type="Self.TRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Principal>
+            <Dependent Role="TRANSACTION">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011134">
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="0..1" />
+          <End Role="TRANSACTION" Type="Self.TRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BANKACCOUNT">
+              <PropertyRef Name="ACC_NO" />
+            </Principal>
+            <Dependent Role="TRANSACTION">
+              <PropertyRef Name="ACCOUNT_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="ACCOUNT_TYPE" EntityType="Self.ACCOUNT_TYPE" Schema="HR" store:Type="Tables" />
+          <EntitySet Name="BANKACCOUNT" EntityType="Self.BANKACCOUNT" Schema="HR" store:Type="Tables" />
+          <EntitySet Name="BRANCH" EntityType="Self.BRANCH" Schema="HR" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="HR" store:Type="Tables" />
+          <EntitySet Name="TRANSACTION" EntityType="Self.TRANSACTION" Schema="HR" store:Type="Tables" />
+          <AssociationSet Name="SYS_C0011129" Association="Self.SYS_C0011129">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011130" Association="Self.SYS_C0011130">
+            <End Role="BRANCH" EntitySet="BRANCH" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011131" Association="Self.SYS_C0011131">
+            <End Role="ACCOUNT_TYPE" EntitySet="ACCOUNT_TYPE" />
+            <End Role="ACCOUNT_TYPE1" EntitySet="ACCOUNT_TYPE" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011132" Association="Self.SYS_C0011132">
+            <End Role="ACCOUNT_TYPE" EntitySet="ACCOUNT_TYPE" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011133" Association="Self.SYS_C0011133">
+            <End Role="BRANCH" EntitySet="BRANCH" />
+            <End Role="TRANSACTION" EntitySet="TRANSACTION" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011134" Association="Self.SYS_C0011134">
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNT" />
+            <End Role="TRANSACTION" EntitySet="TRANSACTION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACCOUNT_TYPE">
+          <Key>
+            <PropertyRef Name="ACC_TYPE_ID" />
+          </Key>
+          <Property Name="ACC_TYPE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACC_TYPE_DESC" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MIN_BAL" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="INTEREST_RATE" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="ACCOUNT_TYPE1" Relationship="Self.SYS_C0011131" FromRole="ACCOUNT_TYPE" ToRole="ACCOUNT_TYPE1" />
+          <NavigationProperty Name="ACCOUNT_TYPE2" Relationship="Self.SYS_C0011131" FromRole="ACCOUNT_TYPE1" ToRole="ACCOUNT_TYPE" />
+          <NavigationProperty Name="BANKACCOUNTs" Relationship="Self.SYS_C0011132" FromRole="ACCOUNT_TYPE" ToRole="BANKACCOUNT" />
+        </EntityType>
+        <EntityType Name="BANKACCOUNT">
+          <Key>
+            <PropertyRef Name="ACC_NO" />
+          </Key>
+          <Property Name="CIF" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="BRANCH_CODE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ACC_NO" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACC_TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ACC_OPEN_DATE" Type="DateTime" />
+          <Property Name="ACC_BALANCE" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="ACCOUNT_TYPE" Relationship="Self.SYS_C0011132" FromRole="BANKACCOUNT" ToRole="ACCOUNT_TYPE" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.SYS_C0011129" FromRole="BANKACCOUNT" ToRole="CUSTOMER" />
+          <NavigationProperty Name="BRANCH" Relationship="Self.SYS_C0011130" FromRole="BANKACCOUNT" ToRole="BRANCH" />
+          <NavigationProperty Name="TRANSACTIONs" Relationship="Self.SYS_C0011134" FromRole="BANKACCOUNT" ToRole="TRANSACTION" />
+        </EntityType>
+        <EntityType Name="BRANCH">
+          <Key>
+            <PropertyRef Name="BRANCH_CODE" />
+          </Key>
+          <Property Name="BRANCH_CODE" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BRANCH_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BRANCH_ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BRANCH_CITY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BRANCH_STATE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BRANCH_ZIP" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="BANKACCOUNTs" Relationship="Self.SYS_C0011130" FromRole="BRANCH" ToRole="BANKACCOUNT" />
+          <NavigationProperty Name="TRANSACTIONs" Relationship="Self.SYS_C0011133" FromRole="BRANCH" ToRole="TRANSACTION" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CIF" />
+          </Key>
+          <Property Name="CIF" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="CUSTOMER_TITLE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_FNAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_LNAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_DOB" Type="DateTime" />
+          <Property Name="CUSTOMER_EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_PHONE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CUSTOMER_GENDER" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_ADDRESS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_CITY" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_STATE" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_ZIPCODE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="IDPROOF_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IDPROOF_NUMBER" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ADDRESSPROOF_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESSPROOF_NUMBER" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="BANKACCOUNTs" Relationship="Self.SYS_C0011129" FromRole="CUSTOMER" ToRole="BANKACCOUNT" />
+        </EntityType>
+        <EntityType Name="TRANSACTION">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BRANCH_CODE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ACCOUNT_NO" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TRANS_TYPE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="TRANS_DESC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_AMOUNT" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="BANKACCOUNT" Relationship="Self.SYS_C0011134" FromRole="TRANSACTION" ToRole="BANKACCOUNT" />
+          <NavigationProperty Name="BRANCH" Relationship="Self.SYS_C0011133" FromRole="TRANSACTION" ToRole="BRANCH" />
+        </EntityType>
+        <Association Name="SYS_C0011131">
+          <End Role="ACCOUNT_TYPE" Type="Self.ACCOUNT_TYPE" Multiplicity="1" />
+          <End Role="ACCOUNT_TYPE1" Type="Self.ACCOUNT_TYPE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_TYPE">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Principal>
+            <Dependent Role="ACCOUNT_TYPE1">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011132">
+          <End Role="ACCOUNT_TYPE" Type="Self.ACCOUNT_TYPE" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT_TYPE">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="ACC_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011129">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CIF" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="CIF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011130">
+          <End Role="BRANCH" Type="Self.BRANCH" Multiplicity="0..1" />
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Principal>
+            <Dependent Role="BANKACCOUNT">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011134">
+          <End Role="BANKACCOUNT" Type="Self.BANKACCOUNT" Multiplicity="0..1" />
+          <End Role="TRANSACTION" Type="Self.TRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BANKACCOUNT">
+              <PropertyRef Name="ACC_NO" />
+            </Principal>
+            <Dependent Role="TRANSACTION">
+              <PropertyRef Name="ACCOUNT_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0011133">
+          <End Role="BRANCH" Type="Self.BRANCH" Multiplicity="0..1" />
+          <End Role="TRANSACTION" Type="Self.TRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BRANCH">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Principal>
+            <Dependent Role="TRANSACTION">
+              <PropertyRef Name="BRANCH_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACCOUNT_TYPE" EntityType="Self.ACCOUNT_TYPE" />
+          <EntitySet Name="BANKACCOUNTs" EntityType="Self.BANKACCOUNT" />
+          <EntitySet Name="BRANCHes" EntityType="Self.BRANCH" />
+          <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+          <EntitySet Name="TRANSACTIONs" EntityType="Self.TRANSACTION" />
+          <AssociationSet Name="SYS_C0011131" Association="Self.SYS_C0011131">
+            <End Role="ACCOUNT_TYPE" EntitySet="ACCOUNT_TYPE" />
+            <End Role="ACCOUNT_TYPE1" EntitySet="ACCOUNT_TYPE" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011132" Association="Self.SYS_C0011132">
+            <End Role="ACCOUNT_TYPE" EntitySet="ACCOUNT_TYPE" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNTs" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011129" Association="Self.SYS_C0011129">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNTs" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011130" Association="Self.SYS_C0011130">
+            <End Role="BRANCH" EntitySet="BRANCHes" />
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNTs" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011134" Association="Self.SYS_C0011134">
+            <End Role="BANKACCOUNT" EntitySet="BANKACCOUNTs" />
+            <End Role="TRANSACTION" EntitySet="TRANSACTIONs" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0011133" Association="Self.SYS_C0011133">
+            <End Role="BRANCH" EntitySet="BRANCHes" />
+            <End Role="TRANSACTION" EntitySet="TRANSACTIONs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="ACCOUNT_TYPE">
+            <EntityTypeMapping TypeName="Model.ACCOUNT_TYPE">
+              <MappingFragment StoreEntitySet="ACCOUNT_TYPE">
+                <ScalarProperty Name="ACC_TYPE_ID" ColumnName="ACC_TYPE_ID" />
+                <ScalarProperty Name="ACC_TYPE_DESC" ColumnName="ACC_TYPE_DESC" />
+                <ScalarProperty Name="MIN_BAL" ColumnName="MIN_BAL" />
+                <ScalarProperty Name="INTEREST_RATE" ColumnName="INTEREST_RATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BANKACCOUNTs">
+            <EntityTypeMapping TypeName="Model.BANKACCOUNT">
+              <MappingFragment StoreEntitySet="BANKACCOUNT">
+                <ScalarProperty Name="CIF" ColumnName="CIF" />
+                <ScalarProperty Name="BRANCH_CODE" ColumnName="BRANCH_CODE" />
+                <ScalarProperty Name="ACC_NO" ColumnName="ACC_NO" />
+                <ScalarProperty Name="ACC_TYPE_ID" ColumnName="ACC_TYPE_ID" />
+                <ScalarProperty Name="ACC_OPEN_DATE" ColumnName="ACC_OPEN_DATE" />
+                <ScalarProperty Name="ACC_BALANCE" ColumnName="ACC_BALANCE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BRANCHes">
+            <EntityTypeMapping TypeName="Model.BRANCH">
+              <MappingFragment StoreEntitySet="BRANCH">
+                <ScalarProperty Name="BRANCH_CODE" ColumnName="BRANCH_CODE" />
+                <ScalarProperty Name="BRANCH_NAME" ColumnName="BRANCH_NAME" />
+                <ScalarProperty Name="BRANCH_ADDRESS" ColumnName="BRANCH_ADDRESS" />
+                <ScalarProperty Name="BRANCH_CITY" ColumnName="BRANCH_CITY" />
+                <ScalarProperty Name="BRANCH_STATE" ColumnName="BRANCH_STATE" />
+                <ScalarProperty Name="BRANCH_ZIP" ColumnName="BRANCH_ZIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="Model.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="CIF" ColumnName="CIF" />
+                <ScalarProperty Name="CUSTOMER_TITLE" ColumnName="CUSTOMER_TITLE" />
+                <ScalarProperty Name="CUSTOMER_FNAME" ColumnName="CUSTOMER_FNAME" />
+                <ScalarProperty Name="CUSTOMER_LNAME" ColumnName="CUSTOMER_LNAME" />
+                <ScalarProperty Name="CUSTOMER_DOB" ColumnName="CUSTOMER_DOB" />
+                <ScalarProperty Name="CUSTOMER_EMAIL" ColumnName="CUSTOMER_EMAIL" />
+                <ScalarProperty Name="CUSTOMER_PHONE" ColumnName="CUSTOMER_PHONE" />
+                <ScalarProperty Name="CUSTOMER_GENDER" ColumnName="CUSTOMER_GENDER" />
+                <ScalarProperty Name="CUSTOMER_ADDRESS" ColumnName="CUSTOMER_ADDRESS" />
+                <ScalarProperty Name="CUSTOMER_CITY" ColumnName="CUSTOMER_CITY" />
+                <ScalarProperty Name="CUSTOMER_STATE" ColumnName="CUSTOMER_STATE" />
+                <ScalarProperty Name="CUSTOMER_ZIPCODE" ColumnName="CUSTOMER_ZIPCODE" />
+                <ScalarProperty Name="IDPROOF_TYPE" ColumnName="IDPROOF_TYPE" />
+                <ScalarProperty Name="IDPROOF_NUMBER" ColumnName="IDPROOF_NUMBER" />
+                <ScalarProperty Name="ADDRESSPROOF_TYPE" ColumnName="ADDRESSPROOF_TYPE" />
+                <ScalarProperty Name="ADDRESSPROOF_NUMBER" ColumnName="ADDRESSPROOF_NUMBER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONs">
+            <EntityTypeMapping TypeName="Model.TRANSACTION">
+              <MappingFragment StoreEntitySet="TRANSACTION">
+                <ScalarProperty Name="TRANS_ID" ColumnName="TRANS_ID" />
+                <ScalarProperty Name="BRANCH_CODE" ColumnName="BRANCH_CODE" />
+                <ScalarProperty Name="ACCOUNT_NO" ColumnName="ACCOUNT_NO" />
+                <ScalarProperty Name="TRANS_TYPE" ColumnName="TRANS_TYPE" />
+                <ScalarProperty Name="TRANS_DATE" ColumnName="TRANS_DATE" />
+                <ScalarProperty Name="TRANS_DESC" ColumnName="TRANS_DESC" />
+                <ScalarProperty Name="TRANS_AMOUNT" ColumnName="TRANS_AMOUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

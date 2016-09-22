@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fb407968079941dbafb38b46c06cb971" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.ACCOUNT_TYPE" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BANKACCOUNT" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BRANCH" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CUSTOMER" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TRANSACTION" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.SYS_C0011131" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C0011132" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C0011129" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C0011130" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C0011134" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.SYS_C0011133" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
