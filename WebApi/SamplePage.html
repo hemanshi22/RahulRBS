@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="Scripts/angular.min.js"></script>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body data-ng-app="">
+    <label>Enter Your name</label>
+    <input type="text" ng-model="cname" /><br />
+    <h3>Hello <span ng-bind="cname"></span></h3>
+
+    <div data-ng-init="cities=['Delhi','Mumbai','Pune','Patiala','Kurukshetra']">
+        <!--<ul>
+            <li ng-repeat="c in cities">{{c}}</li>
+        </ul>
+        <p ng-repeat="c in cities">{{c}}</p>-->
+        <div ng-repeat="c in cities">
+            <input type="checkbox" ng-bind="c" />{{c}}
+        </div>
+    </div>
+</body>
+</html>
+
+
+

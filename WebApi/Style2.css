@@ -1,0 +1,39 @@
+﻿
+body{
+    background-color:darkgray; 
+    font-size:20pt;
+    font:times new roman;
+    
+    /*margin-bottom: 350px;
+    margin-right: 350px;
+    margin-left: 350px;*/
+
+
+}
+form{
+    background-color:darkgray; 
+     
+    font-size:20pt;
+    font:times new roman;
+       
+    
+    /*margin-bottom: 350px;
+    margin-right: 350px;
+    margin-left: 350px;*/
+}
+fieldset
+{
+    border-color:Highlight;
+    
+    border-style:solid;
+}
+input:invalid
+ {
+     border-color:darkred;
+     border-style:solid;
+ }
+
+legend
+{
+      border-bottom: 2px solid blue;
+}

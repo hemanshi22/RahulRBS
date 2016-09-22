@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script  src="Scripts/angular.min.js"></script>
+      <meta charset="utf-8" />
+</head>
+<body ng-controller= "CustController">
+    <img src="download.jpg" alt="RBS logo" style="align-content:center;height:150px;width:450px"><br />
+       <form name="CustForm">
+            <fieldset >
+                <legend style="font-size:24px;background-color:grey;position:center">Customer Details</legend>
+                <table>
+                    <tr>
+                        <td><b>Enter CIF</b></td>
+                        <td><input type="text" ng-model="cid" /></td>
+                    </tr>
+                </table>
+                <input id="Submit1" ng-click="findCustomer()" type="submit" value="submit" style="background-color:aqua;height:20px;width:60px;position:absolute;left:135px"/>
+                <br />
+                <table id="custdata" border="1">
+                    <tr>
+                        <td>Customer ID :  </td>
+                        <td>Name : </td>
+                        <td>Address : </td>
+                        <td>Date Of Birth : </td>
+                        <td>Email ID : </td>
+                    </tr>
+                    <tr>
+                        <td>{{customer.CIF}}</td>
+                        <td>{{customer.CUSTOMER_FNAME}}</td>
+                        <td>{{customer.CUSTOMER_ADDRESS}}</td>
+                        <td>{{customer.CUSTOMER_DOB}}</td>
+                        <td>{{customer.CUSTOEMR_EMAIL}}</td>
+                    </tr>
+                </table>
+            </fieldset>  
+        </form>
+    {{status}}
+</body>
+</html>

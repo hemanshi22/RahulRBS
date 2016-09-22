@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <input type="text" id="CIF" width="100" />
+    <div>
+        <div id="response">
+        </div>
+        <input type="button" value="Find Customer" onclick="CallWebAPI();" />
+        <input type="button" value="Add Customer" onclick="CallPost();" />u
+        <input type="button" value="Modify Customer" onclick="CallPut();" />
+        <input type="button" value="Call Async" onclick="CallWebAPI2();" />
+    </div>
+    <script type="text/javascript">
+        function CallWebAPI()
+        {
+            var responseContainer = document.getElementById('response');
+            var request = new XMLHttpRequest();
+            var id = document.getElementById("CIF").value;
+            request.open("get", "http://localhost:64499/api/Customer/" + id, false);
+            request.send();
+            var data;
+            data = JSON.parse(request.responseText);
+            if (data != null)
+                response.innerHTML = "<table><tr><td>Customer Id</td><td>Customer Name</td></td><tr><tr><td>"
+                    + data.CIF + "</td><td>" + data.CUSTOMER_FNAME + "</td><td>"
+                    + data.CUSTOMER_ADDRESS + "</td><td></tr></table>";
+            else
+                responseContainer.innerHTML = "<b> No matching record Found</b>";
+        }
+        function post()
+        {
+            var responseContainer = document.getElementById('response');
+            var request = new XMLHttpRequest();
+            var obj = {CIF:2212,CUSTOMER_FNAME:"Ashish",CUSTOMER_ADDRESS:"Allahabad",CUSTOMER_DOB:"12/12/2012",CUSTOMER_PHONE:9874567896};
+            request.open("post", "http://localhost:64499/api/Customer/" + id, false);
+            request.setRequestHeader("Content-Type","application/json");
+            request.send(JSON.stringify(obj));
+            var resp = request.responseText;
+            request.innerHTML = resp;
+        }
+        function CallWebAPI2() {
+            var responseContainer = document.getElementById('response');
+            var request = new XMLHttpRequest();
+            var id = document.getElementById("CIF").value;
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    var data;
+                    data = JSON.parse(request.responseText);
+                    if (data != null) {
+                        responseContainer.innerHTML = "<table><tr><td>Customer Id</td><td>Customer Name</td><td>Customer Phone</td></tr><tr><td>"
+                            + data.CIF + "</td><td>" + data.CUSTOMER_FNAME + "</td><td>" +
+                            data.CUSTOMER_PHONE + "</td></tr></table>";
+                    }
+                    else {
+                        responseContainer.innerHTML = "<b>No matching record found</b>";
+                    }
+                }
+            };
+            request.open("get", "http://localhost:64499/api/Customer/" + id, true);
+            request.send();
+            var resp = request.responseText;
+            request.innerHTML = resp;
+        }
+    </script>
+</body>
+</html>

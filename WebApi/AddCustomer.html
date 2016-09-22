@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html ng-app="customersApp">
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/angular.min.js"></script>
+    <!--<link rel="stylesheet" href="Style2.css" />-->
+
+
+</head>
+<body ng-controller="CustController" >
+    
+        <img src="download.jpg" alt="RBS logo" style="height:150px;width:450px;"><br />      
+  
+    <div style="position:absolute;left:40px">
+        <form name="CustForm" >
+            <fieldset>
+                <table style="font-size:21pt">
+
+                    <p>
+                    <tr>
+                        <td>
+                            <label>Title</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="Title" value="Mr" checked> Mr
+                            <input type="radio" name="Title" value="Mrs"> Mrs
+                            <input type="radio" name="Title" value="Ms">Ms
+                        </td>
+                    </tr>
+                    </p>
+                    <tr>
+                        <td>
+                            <label>CIF :</label>
+                        </td>
+                        <td>
+                            <input type="number" id="customer ID" maxlength="10" autocomplete="off" ng-model="customer.CIF" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>First Name :</label>
+                        </td>
+                        <td>
+                            <input type="text" id="customer_fname" maxlength="10" autocomplete="off" ng-model="customer.CUSTOMER_FNAME" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Last Name :</label>
+                        </td>
+                        <td>  <input type="text" id="customer_lname" maxlength="10" autocomplete="off" ng-model="customer.CUSTOMER_LNAME" /> </td>
+
+                    </tr>
+                    <p>
+                    <tr>
+                        <td> <label>Gender :</label> </td>
+                        <td>
+                            <input type="radio" name="Gender" value="male" checked> Male
+                            <input type="radio" name="Gender" value="female"> Female
+                            <input type="radio" name="Gender" value="other"> Other
+                        </td>
+                    </tr>
+                    </p>
+                    <tr>
+                        <td><label>DOB :</label></td>
+                        <td> <input type="date" id="dob" ng-model="customer.CUSTOMER_DOB " /></td>
+
+                    <tr>
+                        <td><label>Email :</label></td>
+                        <td><input type="email" id="email" ng-model="customer.CUSTOMER_EMAIL" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Phone :</label></td>
+                        <td><input type="Number" id="Phone" maxlength="10" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Address :</label></td>
+                        <td> <textarea cols="20" rows="4" id="addr" ng-model="customer.CUSTOMER_ADDRESS"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td> <label>City :</label></td>
+                        <td><input type="text" id="city" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>State :</label></td>
+                        <td><input type="text" id="state" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Zipcode :</label></td>
+                        <td><input type="number" id="Zipcode" maxlength="6" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Id Proof Type :</label></td>
+                        <td><input type="text" id="Id Type" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>ID proof Number :</label></td>
+                        <td><input type="Number" id="Id Number" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Address proof type :</label></td>
+                        <td><input type="text" id="Add Type" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Address Proof Number :</label></td>
+                        <td><input type="number" id="Add Number" /></td>
+                    </tr>
+
+
+                </table>
+                <input type="submit" ng-click="AddCustomer()" value="Add Customer" style="width:200px;height:40px; color:white; background-color:dodgerblue; font-size:20pt" />
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
