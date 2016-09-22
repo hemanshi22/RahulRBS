@@ -1,0 +1,100 @@
+<form>
+<!-- account number textbox -->
+	<BR />
+	<BR />	
+	<div class="input-group">
+		<input type='text' name='acc_no' class="form-control" placeholder="Account Number" ng-model="accNo"></input>
+	</div>
+	
+	<div class="separator50"></div>
+		
+		
+	  <div class="col6 offset-left2" >
+	    <div class="col5">
+	      <div class="datepicker"      date-format="MM/dd/yyyy"	      date-max-limit= {{todaydateinitial}}	      date-format="MM/dd/yyyy" >
+	      	<input ng-model="date1M" type="text" class="angular-datepicker-input" ng-change="changeFinalDate()" placeholder="Choose Start Date"></input>
+	      </div>
+	      <pre>                Start Date    </pre>
+	    </div>
+	    <div class="col5">
+	    	<div class="datepicker" date-format="MM/dd/yyyy" datepicker-toggle="true" date-set={{finalDate}} date-min-limit= {{date1M}}   date-max-limit= {{todaydatefinal}} >
+	     		<input  ng-model="date2" type="text"  class="angular-datepicker-input" ng-disabled="isDisabled" placeholder="Choose End Date"> </input>
+		    </div>
+	        <pre>                  End Date    </pre>
+	  	</div>
+	  </div>
+	  
+	  <div class="separator50"></div>
+		
+	<!-- Submit Report Button -->	
+	  <div >
+		<input type="submit" value="Submit" class="btn btn-primary btn-md"  style="width: 10% ; vertical-align: middle" ng-click="fetchTableData()" />
+	  </div>
+
+</form>
+<br />
+
+<div ng-show= "returnValue">
+<label>Holder Name: </label> <span>{{holderName}}</span>
+<br />
+<label>Current Balance: </label> <span>{{currBalance}}</span></div>
+<br />
+</div>
+<!-- Report Table -->
+<table class="table table-hover" ng-show= "returnValue">
+  <tr>
+  	<th>#</th>
+  	<th ng-click="sortType = 'transactionId'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionId' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionId' && sortReverse" class="fa fa-caret-up"></span>
+    	Transaction ID</th>
+    <th ng-click="sortType = 'transactionDate'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionDate' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionDate' && sortReverse" class="fa fa-caret-up"></span>
+    	Transaction Date</th>
+    <th ng-click="sortType = 'accountType'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'accountType' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'accountType' && sortReverse" class="fa fa-caret-up"></span>
+    	Account Type</th>
+    <th ng-click="sortType = 'facingAccount'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'facingAccount' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'facingAccount' && sortReverse" class="fa fa-caret-up"></span>
+    	Facing Account</th>
+    <th ng-click="sortType = 'facingAccountType'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'facingAccountType' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'facingAccountType' && sortReverse" class="fa fa-caret-up"></span>
+    	Facing Account Type</th>
+    <th ng-click="sortType = 'crdr'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'crdr' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'crdr' && sortReverse" class="fa fa-caret-up"></span>
+    	Transaction Type</th>
+    <th ng-click="sortType = 'amount'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'amount' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'amount' && sortReverse" class="fa fa-caret-up"></span>
+    	Amount</th>
+  </tr>
+  <tr >
+		<td>-</td>
+		<td><input id="filterID" type="text" placeholder="Filter ID" data-ng-model="filterID"></td>
+		<td><input id="filterDate" type="text" placeholder="Filter Transaction Date" data-ng-model="filterDate"></td>
+		<td><input id="filterAccType" type="text" placeholder="Filter Account Type" data-ng-model="filterAccType"></td>
+		<td><input id="filterFacingAcount" type="text" placeholder="Filter Facing Account" data-ng-model="filterFacingAcount"></td>
+		<td><input id="filterFacingAcountType" type="text" placeholder="Filter Facing Account Type" data-ng-model="filterFacingAcountType"></td>
+		<td><input id="filterCRDR" type="text" placeholder="Filter Transaction Type" data-ng-model="filterCRDR"></td>
+		<td><input id="filterAmt" type="text" placeholder="Filter Amount" data-ng-model="filterAmt"></td>
+	</tr>
+	<tr ng-repeat="row in tableData | orderBy:sortType:sortReverse | filter : {transactionId: filterID} | filter : {transactionDate: filterDate} | filter : {accountType: filterAccType} | filter : {facingAccount: filterFacingAcount} | filter : {facingAccountType: filterFacingAcountType} | filter : {crdr: filterCRDR} | filter : {amount: filterAmt}">
+		<td >{{$index + 1}}</td>
+		<td >{{row.transactionId}}</td>
+		<td >{{row.transactionDate}}</td>
+		<td >{{row.accountType}}</td>
+		<td >{{row.facingAccount}}</td>
+		<td >{{row.facingAccountType}}</td>
+		<td >{{row.crdr}}</td>
+		<td >{{row.amount}}</td>
+	</tr>
+</table>
+<br />
+ 
+ 
+ <div id="piechart_3d" style="width: 500px; height: 500px;" ng-show= returnValue></div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+<!-- <link rel="stylesheet" href="bootstrap.min.css">
+<script src="jquery.min.js.css"></script>
+<script src="bootstrap.min.js.css"></script> -->
+<script>
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+</script>
+
+
+<meta charset="ISO-8859-1">
+<script type="text/javascript">
+
+function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
+function loaders() {
+	div = document.getElementById('wrong_user');
+	if($_GET('wp')=='true') {
+		div.style.display='block';
+	}
+}
+</script>
+<title>Login Page</title>
+</head>
+<body onload="loaders()">
+	<br/><br/>
+	<figure>
+		<center>
+			<img src="Photo/ABC_logo.jpg" width="600" height="150" />
+		</center>
+	</figure>
+	<br/><br/>
+	<div class="text-info"  align="center"><h1>Employee Login</h1></div>
+	<br/><br/>
+	
+	<div id='wrong_user'  align="center" style="display:none;"><h3 style="color:red;">Incorrect UserID/Password</h3></div>
+	<form method="post" action="Home">
+		<table class="table table-hover table-bordered" align="center"
+			style="width: 600px">
+			<tr class="well">
+				<td><div class="text-info">User ID: </div></td>
+				<td><input type="text" name="Login"></td>
+			</tr>
+			<tr class="well">
+				<td><div class="text-info">Password:</div></td>
+				<td><input type="password" name="Password"></td>
+			</tr>
+		</table>
+		<div align="center">
+			<input class="btn btn-well" type="submit" value="Login">
+		</div>
+	</form>
+</body>
+</html>

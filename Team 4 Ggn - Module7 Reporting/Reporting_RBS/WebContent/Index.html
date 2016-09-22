@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
+	<link rel="stylesheet" href="CSS/BootStrap.css">
+	<script src="JavaScript/Jquery.js"></script>
+	<link rel="stylesheet" href="CSS/sweetalert.css">
+	<script src="JavaScript/sweetalert.min.js"></script>
+	<script src="JavaScript/bootstrap.js"></script>
+	<script src="JavaScript/angular.js"></script>
+	<script src="JavaScript/angular-route.js"></script>
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="JavaScript/charts.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" type="text/css" href="CSS/helper.css">
+  	<link rel="stylesheet" type="text/css" href="CSS/angular-datepicker.css">
+	
+	
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="JavaScript/angular-datepicker.js"></script>
+<script src="JavaScript/MainApp.js"></script>	
+
+<title>Reporting</title>
+</head>
+<body ng-app="mainapp">
+  <br /> 
+    <div class="container" ng-controller="mainController">
+  
+  <ul class="nav nav-pills">
+    <li class="{{home}}" ng-click="clickedMe('home')"><a data-toggle="pill" href="#home">Home</a></li>
+    <li class="dropdown {{ast}}" ng-show="isTMSAAllowed || isTLMAllowed || isTMTDAllowed">
+    	<a class="dropdown-toggle" data-toggle="dropdown" >Account Statement<span class="caret"></span></a>
+        	<ul class="dropdown-menu">
+            	<li ng-click="clickedMe('ast')"><a href="#accountStatements/D/R">Range</a></li>
+		        <li ng-click="clickedMe('ast')"><a href="#accountStatements/D/M">Month</a></li>
+      		</ul>
+    </li>
+    
+    <li class="dropdown {{trans}}" ng-show="(isTMSAAllowed || isTLMAllowed || isTMTDAllowed)">
+    	<a class="dropdown-toggle" data-toggle="dropdown" >Transaction Details<span class="caret"></span></a>
+   		<ul class="dropdown-menu">
+           	<li ng-click="clickedMe('trans')"><a href="#transactionDetails/D/D">Day</a></li>
+		    <li ng-click="clickedMe('trans')"><a href="#transactionDetails/D/W">Week</a></li>
+		    <li ng-click="clickedMe('trans')"><a href="#transactionDetails/D/M">Month</a></li>
+		    <li ng-click="clickedMe('trans')"><a href="#transactionDetails/T/N">Type</a></li>
+      	</ul>
+    </li>
+    
+    <li class="dropdown {{add}}" ng-show="isAllowed">
+    	<a class="dropdown-toggle" data-toggle="dropdown" >Account Details<span class="caret"></span></a>
+     		<ul class="dropdown-menu">
+            	<li ng-click="clickedMe('add')"><a href="#accountDetails/D/D">Day</a></li>
+		        <li ng-click="clickedMe('add')"><a href="#accountDetails/D/W">Week</a></li>
+		        <li ng-click="clickedMe('add')"><a href="#accountDetails/D/M">Month</a></li>
+		        <li ng-click="clickedMe('add')"><a href="#accountDetails/T/N">Type</a></li>
+      		</ul>
+   	 </li>
+  
+  </ul>
+ 
+  <div class="tab-content">
+     <div data-ng-view="" >
+    
+    </div>
+</div>
+    
+</div>   
+
+</body>
+</html>

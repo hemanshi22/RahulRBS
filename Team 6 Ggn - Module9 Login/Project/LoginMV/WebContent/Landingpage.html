@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
+ </script>
+
+<title>ABC Home</title>
+</head>
+<FRAMESET ROWS="13%,87%">
+<FRAME SRC="WelcomePanel.jsp" NAME=top noresize="noresize" scrolling="no">
+<FRAMESET COLS="78%,22%">
+<FRAME SRC="/ProductCatalog/AdminController" NAME=bottomleft noresize="noresize">
+<FRAME SRC="Module_Panel.jsp" NAME=bottomright noresize="noresize" scrolling="no">
+</FRAMESET>
+</FRAMESET>
+</html>

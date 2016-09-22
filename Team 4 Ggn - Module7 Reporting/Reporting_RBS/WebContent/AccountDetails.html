@@ -1,0 +1,117 @@
+<form>
+<div class="separator30"></div>
+  <div class="col6 offset-left2" ng-hide="isType">
+    <div class="col5">
+      <div class="datepicker"      date-format="MM/dd/yyyy"      date-max-limit= {{todaydate}}     >
+      <input ng-model="date1R" type="text" class="angular-datepicker-input" ng-change="changeFinalDate()" placeholder="Choose Start Date"></input>
+    </div>    
+     <pre>                Start Date    </pre>
+  </div>
+  <div class="col5" ng-show="isRange">
+    <div class="datepicker"
+       date-format="MM/dd/yyyy" 
+        >
+     <input  ng-model="date2" type="text"  class="angular-datepicker-input" disabled placeholder="Choose End Date" > </input>
+    </div>
+         <pre>                  End Date    </pre>
+  </div>
+</div>
+
+      <select class="form-control" id="sel1" ng-show="isType" ng-model="accountType"   ng-change="selectionChanged()" placeholder="Choose Type">
+       <option value="" disabled selected hidden>Please Choose...</option>
+        <option>SAVINGS</option>
+        <option>CURRENT</option>
+        <option>RD</option>
+        <option>FD</option>
+        <option>FX</option>
+      </select>
+      
+<div class="separator50"></div>      
+      <!-- Submit Report Button -->	
+<div >
+<input type="submit" value="Submit" class="btn btn-primary btn-md"  style="width: 10% ; vertical-align: middle" ng-click="fetchTableData()" />
+</div>
+</form>
+
+<br />
+
+<!-- Report Table -->
+<table class="table table-hover" ng-show= returnValue>
+  <tr>
+  	<th>Index</th>
+    <th ng-click="sortType = 'acc_NO'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'acc_NO' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'acc_NO' && sortReverse" class="fa fa-caret-up"></span>
+    	Account Number</th>
+    <th ng-click="sortType = 'cust_ID'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'cust_ID' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'cust_ID' && sortReverse" class="fa fa-caret-up"></span>
+    	Customer ID</th>
+    <th ng-click="sortType = 'acc_TYPE'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'acc_TYPE' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'acc_TYPE' && sortReverse" class="fa fa-caret-up"></span>
+    	Account Type</th>
+    <th ng-click="sortType = 'doo'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'doo' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'doo' && sortReverse" class="fa fa-caret-up"></span>
+    	Date of Opening</th>
+    <th ng-click="sortType = 'nominee_NAME'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'nominee_NAME' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'nominee_NAME' && sortReverse" class="fa fa-caret-up"></span>
+    	Nominee Name</th>
+    <th ng-click="sortType = 'branch_CODE'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'branch_CODE' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'branch_CODE' && sortReverse" class="fa fa-caret-up"></span>
+    	Branch Code</th>
+    <th ng-click="sortType = 'balance'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'balance' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'balance' && sortReverse" class="fa fa-caret-up"></span>
+    	Current Balance</th>
+    <th ng-click="sortType = 'interest_RATE'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'interest_RATE' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'interest_RATE' && sortReverse" class="fa fa-caret-up"></span>
+    	Interest Rate</th>
+    <th ng-click="sortType = 'archived_STATUS'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'archived_STATUS' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'archived_STATUS' && sortReverse" class="fa fa-caret-up"></span>
+    	Archived Status</th>
+    <th ng-click="sortType = 'date_OF_MATURITY'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'date_OF_MATURITY' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'date_OF_MATURITY' && sortReverse" class="fa fa-caret-up"></span>
+    	Maturity Date</th>
+    <th ng-click="sortType = 'initial_DEPOSIT'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'initial_DEPOSIT' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'initial_DEPOSIT' && sortReverse" class="fa fa-caret-up"></span>
+    	Initial Deposit</th>
+  </tr>
+  <tr >
+		<td>-</td>
+		<td><input id="filteracc_NO" type="text" placeholder="Filter Account Number" data-ng-model="filteracc_NO"></td>
+		<td><input id="filtercust_ID" type="text" placeholder="Filter Customer ID" data-ng-model="filtercust_ID"></td>
+		<td><input id="filteracc_TYPE" type="text" placeholder="Filter Account Type" data-ng-model="filteracc_TYPE"></td>
+		<td><input id="filterdoo" type="text" placeholder="Filter Date of Opening" data-ng-model="filterdoo"></td>
+		<td><input id="filternominee_NAME" type="text" placeholder="Filter Nominee Name" data-ng-model="filternominee_NAME"></td>
+		<td><input id="filterbranch_CODE" type="text" placeholder="Filter Branch Code" data-ng-model="filterbranch_CODE"></td>
+		<td><input id="filterbalance" type="text" placeholder="Filter Balance" data-ng-model="filterbalance"></td>
+		<td><input id="filterinterest_RATE" type="text" placeholder="Filter Interest Rate" data-ng-model="filterinterest_RATE"></td>
+		<td><input id="filterarchived_STATUS" type="text" placeholder="Filter Archived Status" data-ng-model="filterarchived_STATUS"></td>
+		<td><input id="filterdate_OF_MATURITY" type="text" placeholder="Filter Date of Maturity" data-ng-model="filterdate_OF_MATURITY"></td>
+		<td><input id="filterinitial_DEPOSIT" type="text" placeholder="Filter Initial Deposit" data-ng-model="filterinitial_DEPOSIT"></td>
+	</tr>
+	<tr ng-repeat="row in tableData | orderBy:sortType:sortReverse | filter : filterTable | filter : {acc_NO: filteracc_NO} | filter : {cust_ID: filtercust_ID} | filter : {acc_TYPE: filteracc_TYPE} | filter : {doo: filterdoo} | filter : {nominee_NAME: filternominee_NAME} | filter : {branch_CODE: filterbranch_CODE} | filter : {balance: filterbalance} | filter : {interest_RATE: filterinterest_RATE} | filter : {archived_STATUS: filterarchived_STATUS} | filter : {date_OF_MATURITY: filterdate_OF_MATURITY} | filter : {initial_DEPOSIT: filterinitial_DEPOSIT}">
+		
+		<td >{{$index + 1}}</td>
+		<td >{{row.acc_NO}}</td>
+		<td >{{row.cust_ID}}</td>
+		<td >{{row.acc_TYPE}}</td>
+		<td >{{row.doo}}</td>
+		<td >{{row.nominee_NAME}}</td>
+		<td >{{row.branch_CODE}}</td>
+		<td >{{row.balance}}</td>
+		<td >{{row.interest_RATE}}</td>
+		<td >{{row.archived_STATUS}}</td>
+		<td >{{row.date_OF_MATURITY}}</td>
+		<td >{{row.initial_DEPOSIT}}</td>
+		
+	</tr>
+</table>

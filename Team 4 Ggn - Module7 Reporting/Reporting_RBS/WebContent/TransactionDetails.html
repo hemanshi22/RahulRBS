@@ -1,0 +1,176 @@
+<form>
+<div class="separator30" ></div>
+  <div class="col6 offset-left2" ng-hide="isType">
+    <div class="col5">
+      <div class="datepicker"      date-format="MM/dd/yyyy"      date-max-limit= {{todaydate}}     >
+      <input ng-model="date1R" type="text" class="angular-datepicker-input" ng-change="changeFinalDate()" placeholder="Choose Start Date"></input>
+    </div>    
+     <pre>                Start Date    </pre>
+  </div>
+  <div class="col5" ng-show="isRange">
+    <div class="datepicker"
+       date-format="MM/dd/yyyy" 
+        >
+     <input  ng-model="date2" type="text"  class="angular-datepicker-input" disabled required placeholder="Choose End Date"> </input>
+    </div>
+         <pre>                  End Date    </pre>
+  </div>
+</div>
+
+ <select class="form-control" id="sel1" ng-show="isType" ng-model="accType" ng-change="selectionChanged()" placeholder="Choose Type">
+  <option value="" disabled selected hidden>Please Choose...</option>
+        <option>TERM DEPOSIT</option>
+        <option>SAVINGS</option>
+        <option>LOAN</option>
+        <option>DEMAT</option>
+        <option>FX</option>
+      </select>
+      <br />
+      <!-- Submit Report Button -->	
+<div >
+<div class="separator30" ></div>
+<input type="submit" value="Submit" class="btn btn-primary btn-md"  style="width: 10% ; vertical-align: middle" ng-click="fetchTableData()" />
+</div>
+</form>
+<!-- Report Table -->
+​
+<table class="table table-hover" ng-show= returnValue>
+  <tr>
+  	<th>#</th>
+    <th ng-click="sortType = 'transactionId'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionId' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionId' && sortReverse" class="fa fa-caret-up"></span>
+    	Transaction ID</th>
+    <th ng-click="sortType = 'transactionDate'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionDate' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionDate' && sortReverse" class="fa fa-caret-up"></span>
+            Transaction Date</th>
+    <th ng-click="sortType = 'accountType'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'accountType' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'accountType' && sortReverse" class="fa fa-caret-up"></span>
+            Transaction Type</th>
+    <th ng-click="sortType = 'transactionTo'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionTo' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionTo' && sortReverse" class="fa fa-caret-up"></span>
+            Account Number Credited</th>
+    <th ng-click="sortType = 'transactionToType'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionToType' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionToType' && sortReverse" class="fa fa-caret-up"></span>
+            Credited Account Type</th>
+    <th ng-click="sortType = 'transactionFrom'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionFrom' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionFrom' && sortReverse" class="fa fa-caret-up"></span>
+            Account Number Debited</th>
+    <th ng-click="sortType = 'transactionFromType'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'transactionFromType' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionFromType' && sortReverse" class="fa fa-caret-up"></span>
+            Debited Account Type</th>
+    <th ng-click="sortType = 'amount'; sortReverse = !sortReverse">
+        <span ng-show="sortType == 'amount' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'amount' && sortReverse" class="fa fa-caret-up"></span>
+            Amount</th>
+    <th ng-show="accType=='LOAN'" ng-click="sortType = 'loanId'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'loanId' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'loanId' && sortReverse" class="fa fa-caret-up"></span>
+           Loan ID</th>
+    <th ng-show="accType=='LOAN'" ng-click="sortType = 'transactionDesc'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'transactionDesc' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionDesc' && sortReverse" class="fa fa-caret-up"></span>
+           Transaction Description </th>  
+    <th ng-show="accType=='FX'" ng-click="sortType = 'currencyTo'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'currencyTo' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'currencyTo' && sortReverse" class="fa fa-caret-up"></span>
+            Currency To </th>
+    <th ng-show="accType=='FX'" ng-click="sortType = 'currencyFrom'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'currencyFrom' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'currencyFrom' && sortReverse" class="fa fa-caret-up"></span>
+            Currency From </th>
+    <th ng-show="accType=='FX'" ng-click="sortType = 'rate'; sortReverse = !sortReverse"> 
+    <span ng-show="sortType == 'rate' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'rate' && sortReverse" class="fa fa-caret-up"></span>
+           Rate </th>
+    <th ng-show="accType=='DEMAT'" ng-click="sortType = 'script'; sortReverse = !sortReverse"> 
+    <span ng-show="sortType == 'script' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'script' && sortReverse" class="fa fa-caret-up"></span>
+           Script </th>
+    <th ng-show="accType=='DEMAT'" ng-click="sortType = 'units'; sortReverse = !sortReverse"> 
+    <span ng-show="sortType == 'units' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'units' && sortReverse" class="fa fa-caret-up"></span>
+           Units </th>
+    <th ng-show="accType=='DEMAT'" ng-click="sortType = 'unitCost'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'unitCost' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'unitCost' && sortReverse" class="fa fa-caret-up"></span>
+            Unit Cost </th>
+    <th ng-show="accType=='TERM DEPOSIT'" ng-click="sortType = 'transactionDesc'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'transactionDesc' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionDesc' && sortReverse" class="fa fa-caret-up"></span>
+            Transaction Description </th>
+    <th ng-show="accType=='TERM DEPOSIT'" ng-click="sortType = 'rate'; sortReverse = !sortReverse">
+    <span ng-show="sortType == 'rate' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'rate' && sortReverse" class="fa fa-caret-up"></span>
+            Rate </th>
+    <th ng-show="accType=='SAVINGS'" ng-click="sortType = 'transactionDesc'; sortReverse = !sortReverse"> 
+    <span ng-show="sortType == 'transactionDesc' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'transactionDesc' && sortReverse" class="fa fa-caret-up"></span>
+           Transaction Description </th>
+  </tr>
+  <tr >
+		<td>-</td>
+		<td><input id="filterID" type="text" placeholder="Filter ID" data-ng-model="filterID"></td>
+		<td><input id="filterDate" type="text" placeholder="Filter Date" data-ng-model="filterDate"></td>
+		<td><input id="filterTransType" type="text" placeholder="Filter Transaction Type" data-ng-model="filterTransType"></td>
+		<td><input id="filterAccNoCr" type="text" placeholder="Filter Account Number" data-ng-model="filterAccNoCr"></td>
+		<td><input id="filterAccTypeCr" type="text" placeholder="Filter Account Type" data-ng-model="filterAccTypeCr"></td>
+		<td><input id="filterAccNoDr" type="text" placeholder="Filter Account Number" data-ng-model="filterAccNoDr"></td>
+		<td><input id="filterAccTypeDr" type="text" placeholder="Filter Account Type" data-ng-model="filterAccTypeDr"></td>
+		<td><input id="filterAmt" type="text" placeholder="Filter Amount" data-ng-model="filterAmt"></td>
+		
+		<td ng-show="accType=='LOAN'"><input id="filterLoanId" type="text" placeholder="Filter Loan Id" data-ng-model="filterLoanId"></td>
+		<td ng-show="accType=='LOAN'"><input id="filterLoanDesc" type="text" placeholder="Filter Description" data-ng-model="filterLoanDesc"></td>
+		
+		<td ng-show="accType=='FX'"><input id="filterCurrencyTo" type="text" placeholder="Filter Currency To" data-ng-model="filterCurrencyTo"></td>
+		<td ng-show="accType=='FX'"><input id="filterCurrencyFrom" type="text" placeholder="Filter Currency From" data-ng-model="filterCurrencyFrom"></td>
+		<td ng-show="accType=='FX'"><input id="filterRate" type="text" placeholder="Filter Rate" data-ng-model="filterRate"></td>
+		
+		<td ng-show="accType=='DEMAT'"><input id="filterScript" type="text" placeholder="Filter Script" data-ng-model="filterScript"></td>
+		<td ng-show="accType=='DEMAT'"><input id="filterUnits" type="text" placeholder="Filter Units" data-ng-model="filterUnits"></td>
+		<td ng-show="accType=='DEMAT'"><input id="filterUnitCost" type="text" placeholder="Filter Unit Cost" data-ng-model="filterUnitCost"></td>
+		
+		<td ng-show="accType=='TERM DEPOSIT'"><input id="filterTransDesc" type="text" placeholder="Filter Transaction Description" data-ng-model="filterTransDesc"></td>
+		<td ng-show="accType=='TERM DEPOSIT'"><input id="filterRate" type="text" placeholder="Filter Rate" data-ng-model="filterRate"></td>
+	
+		<td ng-show="accType=='SAVINGS'"><input id="filterTransDesc" type="text" placeholder="Filter Transaction Description" data-ng-model="filterTransDesc"></td>		
+		
+	</th>
+	<tr ng-repeat="row in tableData | orderBy:sortType:sortReverse | filter : filterTable | filter : {transactionId: filterId} | filter : {transactionDate: filterDate} | filter : {accountType: filterTransType} | filter : {transactionTo: filterAccNoCr} |filter : {transactionToType: filterAccTypeCr} |filter : {transactionFrom: filterAccNoDr} |filter : {transactionFromType: filterAccTypeDr} | filter : {amount: filterAmt} | filter : {loanId: filterLoanId} | filter :{transactionDesc : filterLoanDesc}
+	|filter : {currencyTo: filterCurrencyTo} | filter : {currencyFrom: filterCurrencyFrom} | filter : {rate: filterRate} | filter : {script: filterScript} | filter : {units: filterUnits} | filter : {unitsCost: filterUnitCost} |   filter : {transactionDesc: filterTransDesc} |  filter : {rate: filterRate}">
+		<td >{{$index + 1}}</td>
+		<td >{{row.transactionId}}</td>
+		<td >{{row.transactionDate}}</td>
+		<td >{{row.accountType}}</td>
+		<td >{{row.transactionTo}}</td>
+		<td >{{row.transactionToType}}</td>
+		<td >{{row.transactionFrom}}</td>
+		<td >{{row.transactionFromType}}</td>
+		<td >{{row.amount}}</td>
+		<td ng-show="accType=='LOAN'">{{row.loanId}} </td>
+		<td ng-show="accType=='LOAN'">{{row.transactionDesc}} </td>
+
+		<td ng-show="accType=='FX'">{{row.currencyTo}}</td>
+		<td ng-show="accType=='FX'">{{row.currencyFrom}}</td>
+		<td ng-show="accType=='FX'">{{row.rate}}</td>		
+		
+
+		<td ng-show="accType=='DEMAT'"> {{row.script}}</td>
+		<td ng-show="accType=='DEMAT'"> {{row.units}}</td>
+		<td ng-show="accType=='DEMAT'"> {{row.unitCost}}</td>
+		
+		<td ng-show="accType=='TERM DEPOSIT'">{{row.transactionDesc}} </td>
+		<td ng-show="accType=='TERM DEPOSIT'">{{row.rate}} </td>
+		
+		<td ng-show="accType=='SAVINGS'">{{row.transactionDesc}} </td>
+		
+	</tr>
+</table>
+
+<div id="piechart_3d" style="width: 500px; height: 500px;" ng-show= returnValue></div>
