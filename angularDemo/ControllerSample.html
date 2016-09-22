@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="Scripts//angular.min.js"></script>
+
+</head>
+<body data-ng-app="demoApp">
+
+    <div data-ng-controller="SimpleController">
+
+        <div ng-repeat="c in customers">
+            <label>Customer ID </label>{{c.Custid}}&nbsp;&nbsp;
+            <label>Customer Name </label>{{c.Custname}} &nbsp;&nbsp;
+            <label>Address </label>{{c.Address}}
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        var demoApp = angular.module('demoApp', []);
+        demoapp.controller('SimpleController', function controller($scope) {
+            $scope.customers = [
+            { Custid: 1001, Custname: 'Nitin', Address: 'Delhi' },
+            { Custid: 1002, Custname: 'Ajay', Address: 'Mumbai' }];
+                                                                            }
+                            );
+    </script>
+
+</body>
+</html>
